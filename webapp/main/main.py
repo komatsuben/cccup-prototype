@@ -24,3 +24,7 @@ def redirect_landing():
 @main_bp.route('/comingsoon')
 def comingsoon():
     return render_template('main/comingsoon.html')
+
+@main_bp.route('/merchandise')
+def merchandise():
+    return render_template('main/merch.html')

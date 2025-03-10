@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}{% endblock %} - CCCUP XL</title>
+        <link
+            rel="stylesheet"
+            href="{{url_for('main_bp.static', filename='navbar.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{url_for('main_bp.static', filename='global.css')}}"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+            rel="stylesheet"
+        />
+        {% endblock %}
+    </head>
+    <body>
+        <nav>
+            <div class="nav__logo">
+                <!-- wait for sie design -->
+                <!-- <img src="" alt=""> -->
+                <h3>Canisius College Cup XL</h3>
+                <div>
+                    <button class="nav__burger">
+                        <i class="ri-menu-3-line"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="nav__container">
+                <div class="nav__pages">
+                    <div class="nav__item">
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                            >Home</a
+                        >
+                    </div>
+                    <div class="nav__item">
+                        <a id="aboutButton" href="{{url_for('main_bp.home')}}"
+                            >About</a
+                        >
+                    </div>
+                    <div class="nav__item">
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                            >Registeration</a
+                        >
+                    </div>
+                    <div class="nav__item">
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                            >Matches</a
+                        >
+                    </div>
+                    <div class="nav__item">
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                            >Merch</a
+                        >
+                    </div>
+                </div>
+                <div class="nav__registerAccount">
+                    <div class="nav__item">
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                            >Sign Up</a
+                        >
+                    </div>
+                    <div class="nav__item">
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                            >Login</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="nav__container--mobile">
+            <div class="nav__pages--mobile">
+                <div class="nav__item">
+                    <a id="homeButton" href="{{url_for('main_bp.home')}}">
+                        <button>Home</button>
+                    </a>
+                </div>
+                <div class="nav__item">
+                    <a id="aboutButton" href="{{url_for('main_bp.home')}}"
+                        ><button>About</button></a
+                    >
+                </div>
+                <div class="nav__item">
+                    <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                        ><button>Registration</button></a
+                    >
+                </div>
+                <div class="nav__item">
+                    <a id="matchesButton" href="{{url_for('main_bp.home')}}"
+                        ><button>Matches</button></a
+                    >
+                </div>
+                <div class="nav__item">
+                    <a id="merchButton" href="{{url_for('main_bp.home')}}"
+                        ><button>Merch</button></a
+                    >
+                </div>
+            </div>
+            <div class="nav__registerAccount--mobile">
+                <div class="nav__item">
+                    <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                        ><button>Sign Up</button></a
+                    >
+                </div>
+                <div class="nav__item">
+                    <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                        ><button>Login</button></a
+                    >
+                </div>
+            </div>
+        </div>
+
+        {% block content %} {% endblock %} {% block footer %} {% endblock %}
+    </body>
+</html>

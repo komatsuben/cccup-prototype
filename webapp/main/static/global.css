@@ -1,0 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --dark: #919191;
+    --primary: #c0c0c0;
+    --secondary: #e6e6e6;
+}

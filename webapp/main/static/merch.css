@@ -1,0 +1,85 @@
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #333;
+    background-color: #f7f7f7;
+}
+
+/* Header */
+.container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #222;
+}
+
+/* Merch Container Grid */
+.merch__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Merch Card Styles */
+.merch__card {
+    display: flex;
+    flex-direction: column;
+    background-color: #eaeaea;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Container */
+.merch__imageContainer {
+    width: 100%;
+    overflow: hidden;
+}
+
+.merch__image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* Merch Details */
+.merch__details {
+    padding: 1rem;
+    text-align: center;
+}
+
+.merch__title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.merch__description {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--tertiary);
+}
+
+.merch__price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #000;
+}
+
+/* Buy Button */
+.merch__buyBtn {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--tertiary);
+    border: none;
+    color: var(--light);
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.merch__buyBtn:hover {
+    background-color: var(--dark);
+}

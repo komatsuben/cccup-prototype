@@ -1,4 +1,13 @@
-{% extends "main/base.html" %} {% block title %}Home{% endblock %} {% block
-content %}
-<h1>This is the landing page</h1>
+{% extends "main/base.html" %} {% block head %}
+<link
+    rel="stylesheet"
+    href="{{url_for('main_bp.static', filename='landing.css')}}"
+/>
+{% endblock %} {% block title %}Home{% endblock %} {% block content %}
+<div class="landing__bg">
+    <div class="landing__title">
+        <h1 class="landing__heading">Canisius College Cup XL</h1>
+        <h3 class="landing__subheading">Lorem ipsum dolor sit amet</h3>
+    </div>
+</div>
 {% endblock %}

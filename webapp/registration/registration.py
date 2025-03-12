@@ -4,9 +4,12 @@ from jinja2 import TemplateNotFound
 
 
 registration_bp = Blueprint(
-    'main_bp', __name__,
+    'registration_bp', __name__,
     template_folder='templates',
     static_folder='static',
-    static_url_path='/static/main_bp',
+    static_url_path='/static/registration_bp',
 )
 
+@registration_bp.route('/register')
+def register():
+    return render_template('registration/home.')

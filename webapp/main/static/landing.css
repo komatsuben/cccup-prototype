@@ -1,0 +1,13 @@
+.landing__bg {
+    background-image: url("https://placehold.co/1280x720");
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.landing__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5vh 0;
+}

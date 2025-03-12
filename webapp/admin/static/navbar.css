@@ -1,0 +1,89 @@
+nav {
+    display: flex;
+    background-color: var(--primary);
+    padding: 2vh 2vw;
+    justify-content: space-between;
+}
+
+.nav__logo {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+
+.nav__container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: wheat;
+}
+
+.nav__pages {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.nav__registerAccount {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+}
+
+/* Mobile (screen < 600px) */
+.nav__container--mobile {
+    display: none;
+    background-color: red;
+    flex-direction: column;
+}
+
+.nav__pages--mobile {
+    display: none;
+    flex-direction: column;
+}
+
+.nav__item button {
+    background-color: var(--secondary);
+}
+
+.nav__registerAccount--mobile button {
+    background-color: var(--dark);
+}
+
+.nav__burger {
+    display: none;
+    font-size: 1.5rem;
+    width: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+    .nav__logo {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .nav__container {
+        display: none;
+    }
+    .nav__container--mobile {
+        display: flex;
+        position: relative;
+    }
+    .nav__pages--mobile {
+        display: flex;
+    }
+    .nav__item button {
+        width: 100%;
+        height: 2rem;
+        border: none;
+    }
+    .nav__registerAccount--mobile button {
+        width: 100%;
+        height: 2rem;
+        border: none;
+    }
+    .nav__burger {
+        display: flex;
+    }
+}

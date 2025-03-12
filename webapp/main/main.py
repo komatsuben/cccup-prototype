@@ -8,15 +8,13 @@ main_bp = Blueprint(
     static_url_path='/static/main_bp',
 )
 
-# @main_bp.route('/<page>')
-
 @main_bp.route('/')
 def home():
     try:
         return render_template(f'main/landing.html')
     except TemplateNotFound:
         abort(404)
-        
+
 @main_bp.route('/landing')
 def redirect_landing():
     return redirect(url_for('main_bp.home'))

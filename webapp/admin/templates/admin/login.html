@@ -1,8 +1,42 @@
-{% extends "admin/base.html" %}
+{% extends "admin/base.html" %} {% block title %}Admin Login{% endblock %} {%
+block content %}
+<div class="login-container">
+    <h1 class="login-title">Admin Login</h1>
 
-{% block title %}Login{% endblock %}
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <ul class="flashes">
+        {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
 
-{% block content %} 
-<h1>COMING SOON</h1>
+    <form action="/admin/login" method="post" class="login-form">
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input
+                type="text"
+                name="username"
+                id="username"
+                pattern="[A-Za-z0-9_]+"
+                required
+            />
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                name="password"
+                id="passwordField"
+                required
+            />
+            <label class="checkbox-label">
+                <input type="checkbox" onclick="togglePassword()" /> Show
+                Password
+            </label>
+        </div>
+        <button type="submit" class="login-button">Login</button>
+    </form>
+</div>
 {% endblock %}
-

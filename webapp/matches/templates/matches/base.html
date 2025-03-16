@@ -1,33 +1,23 @@
 <!DOCTYPE html>
-<!--
-  -- Canisius College Cup 40
-  -- @version 1.0
-  -- @date 16.03.2025
-  -- @url cccup.id/admin
--->
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{% block title %}{% endblock %} - Admin Panel CCCUP XL</title>
+        <title>{% block title %}{% endblock %} - Matches CCCUP XL</title>
         <link
             rel="stylesheet"
-            href="{{url_for('admin_bp.static', filename='navbar.css')}}"
+            href="{{url_for('main_bp.static', filename='navbar.css')}}"
         />
-        <link
-            rel="stylesheet"
-            href="{{url_for('admin_bp.static', filename='global.css')}}"
-        />
+        
         <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
             rel="stylesheet"
         />
-        {% block head %} {% endblock %}
     </head>
     <body>
         <nav>
             <div class="nav__logo">
-                <h3>Admin Panel CCCUP XL</h3>
+                <h3>Matches CCCUP XL</h3>
                 <div>
                     <button class="nav__burger">
                         <i class="ri-menu-3-line"></i>
@@ -47,7 +37,7 @@
                         >
                     </div>
                     <div class="nav__item">
-                        <a id="homeButton" href="{{url_for('matches_bp.home')}}"
+                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
                             >Matches</a
                         >
                     </div>
@@ -94,6 +84,5 @@
         </div>
         {% block content %}{% endblock %} {% block footer %} {% endblock %} {%
         block scripts %} {% endblock %}
-        <script src="{{url_for('admin_bp.static', filename='js/global.js')}}"></script>
     </body>
 </html>

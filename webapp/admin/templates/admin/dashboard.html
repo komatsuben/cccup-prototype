@@ -1,8 +1,50 @@
-{% extends "admin/base.html" %}
-
-{% block title %}Dashboard{% endblock %}
-
-{% block content %} 
-<h1>COMING SOON</h1>
+{% extends "admin/base.html" %} {%block title%} Dashboard {%endblock%} {% block
+content %}
+<div class="container">
+    <div class="dashboard__title">
+        <h1>Welcome to the Admin Panel, x</h1>
+    </div>
+    <div class="dashboard__panels">
+        <div class="dashboard__item">
+            <a
+                href="{{url_for('admin_bp.admin_panel_regis')}}"
+                class="dashboard__link"
+            >
+                Registration Panel
+            </a>
+        </div>
+        <div class="dashboard__item">
+            <a
+                href="{{url_for('admin_bp.competition_status')}}"
+                class="dashboard__link"
+            >
+                Check Kuota yang Tersisa
+            </a>
+        </div>
+        <div class="dashboard__item">
+            <a
+                href="{{url_for('matches_bp.add_match')}}"
+                class="dashboard__link"
+            >
+                Add Match
+            </a>
+        </div>
+        <div class="dashboard__item">
+            <a
+                href="{{url_for('matches_bp.admin_panel_regis')}}"
+                class="dashboard__link"
+            >
+                Add Match: 3 Set (Bultang/Tenis Meja)
+            </a>
+        </div>
+        <div class="dashboard__item">
+            <a
+                href="{{url_for('matches_bp.home')}}"
+                class="dashboard__link"
+            >
+                Matches Panel
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

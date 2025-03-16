@@ -48,7 +48,7 @@
                         >
                     </div>
                     <div class="nav__item">
-                        <a id="homeButton" href="{{url_for('main_bp.home')}}"
+                        <a id="homeButton" href="{{url_for('matches_bp.home')}}"
                             >Matches</a
                         >
                     </div>
@@ -117,5 +117,6 @@
         </div>
 
         {% block content %} {% endblock %} {% block footer %} {% endblock %}
+        {%block scripts%} {%endblock%}
     </body>
 </html>

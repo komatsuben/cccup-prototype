@@ -1,0 +1,114 @@
+{% extends "admin/base.html" %} {% block title %}Dashboard{% endblock %} {%
+block head %}
+<link
+    rel="stylesheet"
+    href="{{url_for('matches_bp.static', filename='global.css')}}"
+/>
+{% endblock %} {%block content %}
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="dashboard__flash-msg">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <div class="dashboard__title">
+        <h1>Add New Match</h1>
+    </div>
+    <div class="dashboard__form">
+        <form method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div hidden>{{form.current_time(value=current_time)}}</div>
+
+            <div class="form-group" style="margin-bottom: 1rem">
+                {{ form.competition.label }}<span class="required">*</span>
+                {{ form.competition(class="form-control") }} {% for error in
+                form.competition.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    {{ form.team1.label }}<span class="required">*</span>
+                    {{ form.team1(class="form-control") }} {% for error in
+                    form.team1.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.team2.label }}<span class="required">*</span>
+                    {{ form.team2(class="form-control") }} {% for error in
+                    form.team2.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.team1_score.label }}<span class="required">*</span>
+                    {{ form.team1_score(class="form-control") }} {% for error in
+                    form.team1_score.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.team2_score.label }}<span class="required">*</span>
+                    {{ form.team2_score(class="form-control") }} {% for error in
+                    form.team2_score.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.status.label }}<span class="required">*</span>
+                    {{ form.status(class="form-control") }} {% for error in
+                    form.status.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.venue.label }}<span class="required">*</span>
+                    {{ form.venue(class="form-control") }} {% for error in
+                    form.venue.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.stage.label }}<span class="required">*</span>
+                    {{ form.stage(class="form-control") }} {% for error in
+                    form.stage.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.level.label }}<span class="required">*</span>
+                    {{ form.level(class="form-control") }} {% for error in
+                    form.level.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.streaming_link.label }}<span
+                        style="color: transparent"
+                        >.</span
+                    >
+                    {{ form.streaming_link(class="form-control") }} {% for error
+                    in form.streaming_link.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.time.label }}<span class="required">*</span>
+                    {{ form.time(class="form-control") }} {% for error in
+                    form.time.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-actions">
+                <input type="submit" value="Add Match" class="btn-submit" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

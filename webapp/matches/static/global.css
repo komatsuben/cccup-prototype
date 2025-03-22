@@ -120,8 +120,38 @@
 }
 
 /* Matches Page */
+.matches__head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn--add-match {
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary);
+    text-decoration: none;
+    color: var(--dark);
+    justify-items: center;
+}
+.btn--add-match:hover {
+    background-color: var(--tertiary);
+    color: var(--light);
+}
 
 /* Matches Container */
+.matches__container--ongoing {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.matches__container--ongoing h2 {
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+}
+
 .matches__container {
     margin-bottom: 3rem;
 }
@@ -249,4 +279,152 @@
         font-size: 0.9rem;
         padding: 0.5rem 1rem;
     }
+}
+
+/* view_match.html */
+/* Match Page Container */
+.match-container {
+    margin: 0 15vw;
+    min-height: 100vh;
+    background-color: var(--secondary);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+/* Match Title */
+.match-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.match-container h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--tertiary);
+    margin-bottom: 1rem;
+}
+
+/* Scoreboard */
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--light);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.scoreboard__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreboard__team h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.scoreboard__score {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--tertiary);
+}
+
+.scoreboard__versus {
+    display: flex;
+    align-items: center;
+}
+
+.scoreboard__versus h2 {
+    margin: 0;
+}
+
+.status.Live {
+    width: 5rem;
+    background-color: red;
+}
+.status.Done {
+    width: 5rem;
+    background-color: green;
+}
+.status.Scheduled {
+    background-color: orange;
+}
+
+/* Match Info */
+.match-info {
+    text-align: center;
+    background-color: var(--light);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: var(--tertiary);
+}
+
+.match-info p {
+    margin: 0.5rem 0;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 1024px) {
+    .match-container {
+        margin: 0 8vw;
+        padding: 1.5rem;
+    }
+    .scoreboard {
+        gap: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .match-container {
+        margin: 0 5vw;
+        padding: 1rem;
+    }
+    .scoreboard {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .match-container {
+        margin: 0 2vw;
+        padding: 1rem;
+    }
+    .scoreboard__team h3 {
+        font-size: 1.3rem;
+    }
+    .scoreboard__score {
+        font-size: 1.8rem;
+    }
+}
+
+.status {
+    margin: 3vh auto;
+    padding: 0.5rem;
+    display: flex;
+    border-radius: 32px;
+    width: 8rem;
+    height: 2rem;
+    justify-content: space-around;
+}
+
+.status__ball {
+    background-color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+}
+
+.status__text {
+    color: white;
+    font-weight: 900;
 }

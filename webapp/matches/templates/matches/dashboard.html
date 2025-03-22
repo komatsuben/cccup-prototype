@@ -1,9 +1,102 @@
-{% extends "admin/base.html" %} {%block title%} Dashboard {%endblock%} {% block
-content %}
+{% extends "admin/base.html" %} {% block title %} View Match {% endblock %} {%
+block head %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('matches_bp.static', filename='global.css') }}"
+/>
+{% endblock %} {% block content %}
 <div class="container">
-    <div class="dashboard__title">
-        <h1>Welcome to the Matches Panel, x</h1>
+    <div class="matches__head">
+        <h1>Matches</h1>
+        <a href="{{url_for('matches_bp.add_match')}}" class="btn--add-match">
+            <i class="ri-add-circle-line"></i> Add Match</a
+        >
     </div>
-    <div class="dashboard__panels"></div>
+    {% if ongoing_grouped_matches %}
+    <div class="matches__container--ongoing">
+        <h2>Match of The Day</h2>
+        {% for competition, matches in ongoing_grouped_matches.items() %}
+        <div class="competition__section">
+            <h3>{{ competition }}</h3>
+            {# Now competition is correctly rendered #}
+            <div class="matches__grid">
+                {% for match in matches %}
+                <a
+                    href="{{ url_for('matches_bp.update_match', id=match['id']) }}"
+                    class="match__card"
+                >
+                    <div class="match__header">
+                        <span class="stage">{{ match['stage'] }}</span>
+                        <span class="stage {{ match['status']|lower }}"
+                            >{{ match['status'] }}</span
+                        >
+                    </div>
+                    <div class="match__teams">
+                        <div class="match__team">
+                            <span class="team__name">
+                                {{ match['team1'] }}
+                            </span>
+                            <span class="team__score"
+                                >{{ match['team1_score'] }}</span
+                            >
+                        </div>
+                        <div class="match__team">
+                            <span class="team__name">
+                                {{ match['team2'] }}
+                            </span>
+                            <span class="team__score"
+                                >{{ match['team2_score'] }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="match__info">
+                        <span class="match__date"> {{ match['time'] }} </span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %} {% for matches, levels in grouped_matches.items() %}
+    <div class="matches__container">
+        {% for level, match_list in levels.items() %}
+        <h2>{{ matches }} {{ level }}</h2>
+        <div class="matches__grid">
+            {% for match in match_list %}
+            <a
+                href="{{ url_for('matches_bp.update_match', id=match['id']) }}"
+                class="match__card"
+            >
+                <div class="match__header">
+                    <span class="stage">{{ match['stage'] }}</span>
+                    <span class="stage {{ match['status']|lower }}"
+                        >{{ match['status'] }}</span
+                    >
+                </div>
+                <div class="match__teams">
+                    <div class="match__team">
+                        <span class="team__name"> {{match['team1']}} </span>
+                        <span class="team__score"
+                            >{{match['team1_score']}}</span
+                        >
+                    </div>
+                    <div class="match__team">
+                        <span class="team__name"> {{match['team2']}} </span>
+                        <span class="team__score"
+                            >{{match['team2_score']}}</span
+                        >
+                    </div>
+                </div>
+                <div class="match__info">
+                    <span class="info__venue"></span>
+                    <span class="match__date"> {{ match['time'] }} </span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

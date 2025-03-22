@@ -52,7 +52,6 @@ COMPETITION_CHOICES = [
     "orasi",
 ]
 
-
 def serialize_match(match):
     return {
         "id": match.id,
@@ -74,72 +73,111 @@ def serialize_match(match):
 
 @matches_bp.route('/dashboard')
 def admin_home():
-    return render_template('matches/dashboard.html')
+    try:
+        # Fetch all matches using SQLAlchemy ORM
+        matches = Match.query.all()
 
-@matches_bp.route('/')
+        # Serialize matches into dictionaries
+        matches = [serialize_match(match) for match in matches]  # Ensure you have a serialize_match function
+
+        # Group matches by competition & level
+        grouped_matches = {}
+
+        for match in matches:
+            competition = match.get('competition')
+            level = match.get("level")
+            
+            if competition not in grouped_matches:
+                grouped_matches[competition] = {}
+
+            if competition in grouped_matches:
+                if level not in grouped_matches[competition]:
+                    grouped_matches[competition][level] = []
+                grouped_matches[competition][level].append(match)
+
+        return render_template('matches/dashboard.html', grouped_matches=grouped_matches)
+
+    except Exception as e:
+        db.session.rollback()  # Rollback on error to avoid database issues
+        flash(f"Error fetching matches: {e}", "danger")
+    
+        return redirect(url_for('admin_bp.home'))  # Ensure redirect happens after handling the error
+
+@matches_bp.route('/') 
 def home():
     matches = Match.query.all()
     matches = [serialize_match(match) for match in matches]
     
-    grouped_matches = {
-        "Mini Soccer": {},
-        "Basket Putra": {},
-        "Basket Putri": {},
-        "Voli Putra": {},
-        "Voli Putri": {},
-        "Bulu Tangkis": {},
-        "Tenis Meja": {},
-    }
-    
+    grouped_matches = {}
+
+    ongoing_grouped_matches = {}  # Grouping ongoing matches by competition
+
+    today = datetime.now().date()  # Get today's date
+
     for match in matches:
         competition = match.get('competition')
         level = match.get("level")
+        match_time = datetime.strptime(match.get('time'), "%d %b %Y %H:%M")  # Convert to datetime
         
+        if competition not in grouped_matches:
+            grouped_matches[competition] = {}
+
+        # Group ongoing matches by competition
+        if match_time.date() == today:
+            if competition not in ongoing_grouped_matches:
+                ongoing_grouped_matches[competition] = []
+            ongoing_grouped_matches[competition].append(match)
+
+        # Group all matches
         if competition in grouped_matches:
             if level not in grouped_matches[competition]:
                 grouped_matches[competition][level] = []
             grouped_matches[competition][level].append(match)
-    return render_template('matches/view_index.html', grouped_matches=grouped_matches)
 
-@matches_bp.route('/match/<id>')
+    return render_template(
+        'matches/view_index.html',
+        grouped_matches=grouped_matches,
+        ongoing_grouped_matches=ongoing_grouped_matches,  # Pass grouped ongoing matches
+    )
+
+@matches_bp.route('/match/<id>') 
 def view_match(id):
-    # mongo_main = current_app.extensions["mongo_main"]
-    # collection = mongo_main.db.matches
-    
-    # Fetch match details
-    # match = collection.find_one({'_id': ObjectId(id)})
-    # if not match:
-    #     return "Match not found", 404
-    
-    # Serialize the match
-    # match = serialize_document(match)
-    
-    # Extract competition type
-    # competition = match.get('competition')
+    try:
+        cur = connection.cursor()
+        SELECT_MATCH_QUERY = "SELECT * FROM matches WHERE id = %s;"
+        cur.execute(SELECT_MATCH_QUERY, (id,))
+        row = cur.fetchone()
+        cur.close()
 
-    # Render match page based on competition type
-    # if competition == "Voli Putra" or competition == "Voli Putri":
-    #     # Specific handling for Voli (with team set details)
-    #     return render_template(
-    #         'matches/view_voli.html', 
-    #         match=match
-    #     )
+        if not row:
+            return "Match not found", 404
+
+        # Define column names based on the database schema
+        columns = ["id", "competition", "team1", "team2", "team1_score", "team2_score", "status",
+                    "venue", "stage", "level", "streaming_link", "time", "last_updated", "team1_set",
+                    "team2_set"]
+        
+        # Convert row into a dictionary
+        match = dict(zip(columns, row))
+        
+        # Convert datetime to string for rendering if necessary
+        if isinstance(match["time"], datetime):
+            # match["time"] = match["time"].strftime('%Y-%m-%d %H:%M:%S')
+            match["time"] = match["time"].strftime('%A, %d %B %Y %H:%M:%S')
+        
+        competition = match.get("competition")
+
+        # Render template based on competition type
+        if competition in ["Voli Putra", "Voli Putri"]:
+            return render_template('matches/view_voli.html', match=match)
+        elif competition in ["Bulu Tangkis", "Tenis Meja"]:
+            return render_template('matches/view_bulutangkis.html', match=match)
+        else:
+            return render_template('matches/view_match.html', match=match)
     
-    # elif competition == "Bulu Tangkis" or competition == "Tenis Meja":
-    #     # Specific handling for Bulutangkis (with multiple rounds)
-    #     return render_template(
-    #         'matches/view_bulutangkis.html', 
-    #         match=match
-    #     )
-    
-    # else:
-    #     # Default match display for other competitions
-    #     return render_template(
-    #         'matches/view_match.html', 
-    #         match=match
-    #     )
-    # delete later
-    return render_template('matches/view_match.html')
+    except Exception as e:
+        return f"Error fetching match: {e}", 500
+
 
 @matches_bp.route('/add_match', methods=["GET", "POST"])
 def add_match():
@@ -149,6 +187,7 @@ def add_match():
     
     
     form = MatchesForm()
+    
     if form.validate_on_submit():
         team1_set_scores = []
         team2_set_scores = []
@@ -197,33 +236,45 @@ def add_match():
             connection.commit()
             cur.close()
             flash("Match added successfully", "success")
-            return redirect(url_for('matches_bp.update_match', id=id.inserted_id))
+            return redirect(url_for('matches_bp.update_match', id=inserted_id))
         except Exception as e:
             connection.rollback()
             flash(f"Error adding match: {e}", "danger")
     return render_template('matches/add_match.html', form=form)
 
-@matches_bp.route('/update_match/<id>', methods=["GET", "POST"])
+@matches_bp.route('/update_match/<int:id>', methods=['GET', 'POST'])
 def update_match(id):
-    # user = session.get('user', {})
-    # if not user:
-    #     return redirect(url_for('admin_bp.login'))
-    # mongo_main = current_app.extensions["mongo_main"]
-    # collection = mongo_main.db.matches
-    # match = collection.find_one({'_id': ObjectId(id)})
-    # if match["competition"] in ["Bulu Tangkis", "Tenis Meja"]:
-    #     return redirect(url_for("matches_bp.update_3_set_match", id=id))
-    # form = MatchesForm(
-    #     competition = match.get('competition', ''),
-    #     team1 = match.get('team1', ''),
-    #     team2 = match.get('team2', ''),
-    #     status = match.get('status', ''),
-    #     venue = match.get('venue', ''),
-    #     stage = match.get('stage', ''),
-    #     streaming_link = match.get('streaming_link', ''),
-    #     level = match.get('level', ''),
-    #     time = datetime.strptime(match.get('time', ''), "%d %b %Y %H:%M"),
-    #     team1_score = match.get('team1_score', ''),
-    #     team2_score = match.get('team2_score', ''),
-    # )
-    return render_template('matches/update_match.html')
+    # Fetch match record using SQLAlchemy
+    match_record = Match.query.get(id)
+
+    if not match_record:
+        flash("Match not found.", "danger")
+        return redirect(url_for('matches_bp.add_match'))
+
+    # Create form and prefill data
+    form = MatchesForm(obj=match_record)
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if request.method == "GET":
+        form.team1_set.entries.clear()
+        form.team2_set.entries.clear()
+        
+        for score in match_record.team1_set or []:
+            form.team1_set.append_entry({"score": score})
+
+        for score in match_record.team2_set or []:
+            form.team2_set.append_entry({"score": score})
+    
+    if form.validate_on_submit():
+        # Update match fields from form data
+        form.populate_obj(match_record)
+        match_record.last_updated = datetime.now()
+
+        try:
+            db.session.commit()
+            flash("Match updated successfully", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error updating match: {e}", "danger")
+
+    return render_template('matches/update_match.html', form=form, match_id=id, current_time=current_time)

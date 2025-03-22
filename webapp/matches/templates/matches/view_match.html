@@ -1,6 +1,36 @@
-{% extends "matches/base.html" %} {%block title%} View Match {%endblock%} {%
-block content %}
-<div class="container">
-    <h1>View a certain match</h1>
+{% extends "main/base.html" %} {% block title %} Matches | CC CUP 2024
+{%endblock %} {%block head%}
+<link
+    rel="stylesheet"
+    href="{{url_for('matches_bp.static', filename='global.css')}}"
+/>
+{%endblock%} {%block content%}
+<div class="match-container">
+    <h1>{{ match.competition }} {{ match.level }}</h1>
+    <h2>{{ match.stage }}</h2>
+
+    <div class="status {{match.status}}">
+        <span class="status__ball"></span>
+        <p class="status__text">{{ match.status }}</p>
+    </div>
+
+    <div class="scoreboard">
+        <div class="scoreboard__team">
+            <h3>{{ match.team1 }}</h3>
+            <span class="scoreboard__score">{{ match.team1_score }}</span>
+        </div>
+        <div class="scoreboard__versus">
+            <h2>VS</h2>
+        </div>
+        <div class="scoreboard__team">
+            <h3>{{ match.team2 }}</h3>
+            <span class="scoreboard__score">{{ match.team2_score }}</span>
+        </div>
+    </div>
+
+    <div class="match-info">
+        <p>{{ match.venue }}</p>
+        <p>{{ match.time }}</p>
+    </div>
 </div>
-{% endblock %}
+{%endblock%}

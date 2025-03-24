@@ -1,4 +1,4 @@
-{% extends "main/base.html" %} {%block title%} View Match {%endblock%} {%block
+{% extends "admin/base.html" %} {%block title%} View Match {%endblock%} {%block
 head%}
 <link
     rel="stylesheet"
@@ -139,7 +139,9 @@ head%}
                 </div>
             </div>
             <div class="form-actions">
-                <a href="{{ url_for('matches_bp.home') }}" class="btn-back"
+                <a
+                    href="{{ url_for('matches_bp.admin_home') }}"
+                    class="btn-back"
                     >Go back</a
                 >
                 <input type="submit" value="Edit Match" class="btn-submit" />

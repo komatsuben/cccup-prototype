@@ -22,6 +22,11 @@
             href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+        />
+
         {% block head %} {% endblock %}
     </head>
     <body>
@@ -47,7 +52,9 @@
                         >
                     </div>
                     <div class="nav__item">
-                        <a id="homeButton" href="{{url_for('matches_bp.home')}}"
+                        <a
+                            id="homeButton"
+                            href="{{url_for('matches_bp.admin_home')}}"
                             >Matches</a
                         >
                     </div>
@@ -74,7 +81,9 @@
                     >
                 </div>
                 <div class="nav__item">
-                    <a id="matchesButton" href="{{url_for('main_bp.home')}}"
+                    <a
+                        id="matchesButton"
+                        href="{{url_for('matches_bp.admin_home')}}"
                         ><button>Matches</button></a
                     >
                 </div>
@@ -94,6 +103,8 @@
         </div>
         {% block content %}{% endblock %} {% block footer %} {% endblock %} {%
         block scripts %} {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
         <script src="{{url_for('admin_bp.static', filename='js/global.js')}}"></script>
+        <script src="{{url_for('main_bp.static', filename='js/carousel.js')}}"></script>
     </body>
 </html>

@@ -16,6 +16,11 @@
             href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+        />
+
         {% block head %} {% endblock %}
     </head>
     <body>
@@ -115,8 +120,9 @@
                 </div>
             </div>
         </div>
-
         {% block content %} {% endblock %} {% block footer %} {% endblock %}
         {%block scripts%} {%endblock%}
+        <script src="{{url_for('main_bp.static', filename='js/carousel.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     </body>
 </html>

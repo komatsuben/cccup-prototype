@@ -12,53 +12,70 @@ block head %}
             <i class="ri-add-circle-line"></i> Add Match</a
         >
     </div>
+    <div class="heading">
+        <h2>Match of The Day</h2>
+    </div>
     {% if ongoing_grouped_matches %}
     <div class="matches__container--ongoing">
-        <h2>Match of The Day</h2>
         {% for competition, matches in ongoing_grouped_matches.items() %}
         <div class="competition__section">
             <h3>{{ competition }}</h3>
             {# Now competition is correctly rendered #}
-            <div class="matches__grid">
-                {% for match in matches %}
-                <a
-                    href="{{ url_for('matches_bp.update_match', id=match['id']) }}"
-                    class="match__card"
-                >
-                    <div class="match__header">
-                        <span class="stage">{{ match['stage'] }}</span>
-                        <span class="stage {{ match['status']|lower }}"
-                            >{{ match['status'] }}</span
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    {% for match in matches %}
+                    <div class="swiper-slide">
+                        <a
+                            href="{{ url_for('matches_bp.update_match', id=match['id']) }}"
+                            class="match__card"
                         >
+                            <div class="match__header">
+                                <span class="stage">{{ match['stage'] }}</span>
+                                <span class="stage {{ match['status']|lower }}"
+                                    >{{ match['status'] }}</span
+                                >
+                            </div>
+                            <div class="match__teams">
+                                <div class="match__team">
+                                    <span class="team__name">
+                                        {{ match['team1'] }}
+                                    </span>
+                                    <span class="team__score"
+                                        >{{ match['team1_score'] }}</span
+                                    >
+                                </div>
+                                <div class="match__team">
+                                    <span class="team__name">
+                                        {{ match['team2'] }}
+                                    </span>
+                                    <span class="team__score"
+                                        >{{ match['team2_score'] }}</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="match__info">
+                                <span class="match__date">
+                                    {{ match['time'] }}
+                                </span>
+                                <span class="match__details">
+                                    View details
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                    <div class="match__teams">
-                        <div class="match__team">
-                            <span class="team__name">
-                                {{ match['team1'] }}
-                            </span>
-                            <span class="team__score"
-                                >{{ match['team1_score'] }}</span
-                            >
-                        </div>
-                        <div class="match__team">
-                            <span class="team__name">
-                                {{ match['team2'] }}
-                            </span>
-                            <span class="team__score"
-                                >{{ match['team2_score'] }}</span
-                            >
-                        </div>
-                    </div>
-                    <div class="match__info">
-                        <span class="match__date"> {{ match['time'] }} </span>
-                    </div>
-                </a>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
         </div>
         {% endfor %}
     </div>
-    {% endif %} {% for matches, levels in grouped_matches.items() %}
+    {% endif %}
+    <div class="heading">
+        <h2>All Matches</h2>
+    </div>
+    {% for matches, levels in grouped_matches.items() %}
     <div class="matches__container">
         {% for level, match_list in levels.items() %}
         <h2>{{ matches }} {{ level }}</h2>
@@ -89,8 +106,8 @@ block head %}
                     </div>
                 </div>
                 <div class="match__info">
-                    <span class="info__venue"></span>
                     <span class="match__date"> {{ match['time'] }} </span>
+                    <span class="match__details">View details</span>
                 </div>
             </a>
             {% endfor %}

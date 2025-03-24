@@ -7,9 +7,11 @@ block head %}
 {% endblock %} {% block content %}
 <div class="container">
     <h1>Matches</h1>
+    <div class="heading">
+        <h2>Match of The Day</h2>
+    </div>
     {% if ongoing_grouped_matches %}
     <div class="matches__container--ongoing">
-        <h2>Match of The Day</h2>
         {% for competition, matches in ongoing_grouped_matches.items() %}
         <div class="competition__section">
             <h3>{{ competition }}</h3>
@@ -46,6 +48,7 @@ block head %}
                     </div>
                     <div class="match__info">
                         <span class="match__date"> {{ match['time'] }} </span>
+                        <span class="match__details"> View details </span>
                     </div>
                 </a>
                 {% endfor %}
@@ -53,7 +56,11 @@ block head %}
         </div>
         {% endfor %}
     </div>
-    {% endif %} {% for matches, levels in grouped_matches.items() %}
+    {% endif %}
+    <div class="heading">
+        <h2>All Matches</h2>
+    </div>
+    {% for matches, levels in grouped_matches.items() %}
     <div class="matches__container">
         {% for level, match_list in levels.items() %}
         <h2>{{ matches }} {{ level }}</h2>

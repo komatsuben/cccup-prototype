@@ -132,6 +132,7 @@
     text-decoration: none;
     color: var(--dark);
     justify-items: center;
+    align-self: center;
 }
 .btn--add-match:hover {
     background-color: var(--tertiary);
@@ -140,11 +141,29 @@
 
 /* Matches Container */
 .matches__container--ongoing {
-    margin-top: 3rem;
     margin-bottom: 3rem;
+    background-color: var(--light);
 }
 
-.matches__container--ongoing h2 {
+.heading h2 {
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    /* border-bottom: 2px solid var(--primary); */
+    text-align: center;
+}
+
+.heading h2 {
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    /* border-bottom: 2px solid var(--primary); */
+    text-align: center;
+}
+
+.competition__section h3 {
     font-size: 1.8rem;
     color: var(--dark);
     margin-bottom: 1rem;
@@ -154,6 +173,7 @@
 
 .matches__container {
     margin-bottom: 3rem;
+    background-color: var(--light);
 }
 
 /* Section Heading */
@@ -234,9 +254,20 @@
 /* Match Info Section */
 .match__info {
     padding: 0.75rem 1rem;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
     font-size: 0.9rem;
     color: var(--tertiary);
+}
+
+.match__details {
+    background-color: var(--primary);
+    padding: 0.25rem 0.25rem;
+    border-radius: 4px;
+}
+
+.match__date {
+    align-self: center;
 }
 
 /* Responsive Adjustments */
@@ -427,4 +458,11 @@
 .status__text {
     color: white;
     font-weight: 900;
+}
+
+.swiper-button-next {
+    color: var(--tertiary);
+}
+.swiper-button-prev {
+    color: var(--tertiary);
 }

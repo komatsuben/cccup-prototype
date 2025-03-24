@@ -73,35 +73,40 @@ def serialize_match(match):
 
 @matches_bp.route('/dashboard')
 def admin_home():
-    try:
-        # Fetch all matches using SQLAlchemy ORM
-        matches = Match.query.all()
-
-        # Serialize matches into dictionaries
-        matches = [serialize_match(match) for match in matches]  # Ensure you have a serialize_match function
-
-        # Group matches by competition & level
-        grouped_matches = {}
-
-        for match in matches:
-            competition = match.get('competition')
-            level = match.get("level")
-            
-            if competition not in grouped_matches:
-                grouped_matches[competition] = {}
-
-            if competition in grouped_matches:
-                if level not in grouped_matches[competition]:
-                    grouped_matches[competition][level] = []
-                grouped_matches[competition][level].append(match)
-
-        return render_template('matches/dashboard.html', grouped_matches=grouped_matches)
-
-    except Exception as e:
-        db.session.rollback()  # Rollback on error to avoid database issues
-        flash(f"Error fetching matches: {e}", "danger")
+    matches = Match.query.all()
+    matches = [serialize_match(match) for match in matches]
     
-        return redirect(url_for('admin_bp.home'))  # Ensure redirect happens after handling the error
+    grouped_matches = {}
+
+    ongoing_grouped_matches = {}  # Grouping ongoing matches by competition
+
+    today = datetime.now().date()  # Get today's date
+
+    for match in matches:
+        competition = match.get('competition')
+        level = match.get("level")
+        match_time = datetime.strptime(match.get('time'), "%d %b %Y %H:%M")  # Convert to datetime
+        
+        if competition not in grouped_matches:
+            grouped_matches[competition] = {}
+
+        # Group ongoing matches by competition
+        if match_time.date() == today:
+            if competition not in ongoing_grouped_matches:
+                ongoing_grouped_matches[competition] = []
+            ongoing_grouped_matches[competition].append(match)
+
+        # Group all matches
+        if competition in grouped_matches:
+            if level not in grouped_matches[competition]:
+                grouped_matches[competition][level] = []
+            grouped_matches[competition][level].append(match)
+
+    return render_template(
+        'matches/dashboard.html',
+        grouped_matches=grouped_matches,
+        ongoing_grouped_matches=ongoing_grouped_matches,  # Pass grouped ongoing matches
+    )
 
 @matches_bp.route('/') 
 def home():

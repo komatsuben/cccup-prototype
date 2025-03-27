@@ -6,6 +6,7 @@ from main.main import main_bp
 from registration.registration import registration_bp
 from admin.admin import admin_bp
 from matches.matches import matches_bp
+
 import psycopg2
 
 from matches.models import Match

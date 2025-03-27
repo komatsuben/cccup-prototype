@@ -1,46 +1,64 @@
 {% extends "admin/base.html" %} {% block title %}Admin Login{% endblock %} {%
-block content %}
-<div class="login-container">
-    <h1 class="login-title">Admin Login</h1>
-
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <ul class="flashes">
-        {% for category, message in messages %}
-        <li class="flash-message {{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
-
-    <form action="/admin/login" method="post" class="login-form">
-        <div class="input-group">
-            <label for="username">Username</label>
-            <input
-                type="text"
-                name="username"
-                id="username"
-                pattern="[A-Za-z0-9_]+"
-                required
-            />
+block head%}
+<link
+    rel="stylesheet"
+    href="{{url_for('admin_bp.static', filename='login.css')}}"
+/>
+{%endblock%} {% block content %}
+<div class="container center">
+    <div class="login">
+        <div class="login__head">
+            <h1>Login ..</h1>
+            <h2>Welcome Back!</h2>
         </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input
-                type="password"
-                name="password"
-                id="passwordField"
-                required
-            />
-            <label class="checkbox-label">
-                <input
-                    type="checkbox"
-                    onclick="togglePassword()"
-                    style="margin-right: 0.25rem"
-                />
-                Show Password
-            </label>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="flash-message {{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+
+        <div class="login__form">
+            <form action="/admin/login" method="post">
+                <div class="login__field">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        class="login__user"
+                        pattern="[A-Za-z0-9_]+"
+                        required
+                    />
+                </div>
+                <div class="login__field">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="passwordField"
+                        class="login__user"
+                        required
+                    />
+                </div>
+                <div class="login__field">
+                    <label class="login__checkbox">
+                        <input
+                            type="checkbox"
+                            onclick="togglePassword()"
+                            class="brutalist__checkbox"
+                        />
+                        Show Password
+                    </label>
+                </div>
+                <button type="submit" class="brutalist__button">
+                    Login <i class="ri-arrow-right-up-box-line"></i>
+                </button>
+            </form>
         </div>
-        <button type="submit" class="login-button">Login</button>
-    </form>
+    </div>
 </div>
 {% endblock %}

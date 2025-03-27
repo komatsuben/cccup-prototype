@@ -26,3 +26,7 @@ def comingsoon():
 @main_bp.route('/merchandise')
 def merchandise():
     return render_template('main/merch.html')
+
+@main_bp.route('/test')
+def boilerplate():
+    return render_template('main/tests.html')

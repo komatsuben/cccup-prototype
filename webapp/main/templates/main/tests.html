@@ -1,0 +1,42 @@
+{% extends "main/base.html" %} {% block head %}
+<link
+    rel="stylesheet"
+    href="{{url_for('main_bp.static', filename='test.css')}}"
+/>
+{% endblock %} {% block title %}Boilerplate{% endblock %} {% block content %}
+<div class="container">
+    <h1>Boilerplate</h1>
+    <h1 class="heading-1">Heading 1</h1>
+    <h2 class="heading-2">Heading 2</h2>
+    <h3 class="heading-3">Heading 3</h3>
+    <h4 class="heading-4">Heading 4</h4>
+    <h5 class="heading-5">Heading 5</h5>
+    <h6 class="heading-6">Heading 6</h6>
+</div>
+<div class="login">
+    <div class="login__head">
+        <h1>Login ..</h1>
+        <h2>Welcome Back!</h2>
+    </div>
+    <div class="login__form">
+        <form method="post" enctype="multipart/form-data">
+            <!-- go add the csrf token here -->
+            <div class="login__field">
+                <!-- form dummy -->
+                <label for="">Username</label>
+                <input type="text" class="login__user" />
+            </div>
+            <div class="login__field">
+                <label for="">Password</label>
+                <input type="password" class="login__password" />
+            </div>
+            <div class="brutalist__button-wrapper">
+                <button type="submit" class="brutalist__button">
+                    Login <i class="ri-arrow-right-up-box-line"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

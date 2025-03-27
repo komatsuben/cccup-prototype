@@ -86,4 +86,7 @@ nav {
     .nav__burger {
         display: flex;
     }
+    .nav__container--mobile.hide {
+        display: none;
+    }
 }

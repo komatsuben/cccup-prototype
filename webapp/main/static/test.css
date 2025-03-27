@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+.login {
+    margin: 0 15vw;
+    background-color: var(--henko-shiro);
+}
+
+.login h1 {
+    color: var(--henko-kurai-ao);
+}
+.login h2 {
+    color: var(--henko-ao);
+}
+
+.login__form form > div {
+    margin: 0.5rem 0;
+}
+
+.login__field {
+    display: flex;
+    flex-direction: column;
+}
+
+.login__field label {
+    color: var(--henko-kurai-ao);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.login__user,
+.login__password {
+    background-color: var(--henko-shiro);
+    border: 1px solid var(--henko-kurai-ao);
+    height: 1.5rem;
+    padding: 1rem;
+    width: 50%;
+    transition: all var(--transition-speed) ease;
+    color: var(--henko-ao);
+}
+
+@media screen and (max-width: 600px) {
+    .container,
+    .login {
+        margin: 0 5vw;
+    }
+    .login__head h1 {
+        font-size: 3rem;
+    }
+    .login__user,
+    .login__password {
+        width: 100%;
+    }
+}
+
+.login__user:focus,
+.login__password:focus {
+    /* outline: none; */
+    outline: double var(--henko-kurai-ao);
+}
+
+.brutalist__button {
+    border-radius: 0;
+    border: none;
+    color: var(--henko-shiro);
+    background-color: var(--henko-kurai-ao);
+    padding: 0.75rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.brutalist__button:hover {
+    background-color: var(--henko-ao);
+    box-shadow: 4px 4px 0px 0px var(--henko-mizu-iro);
+}
+
+.brutalist__button:focus {
+    outline: thick double var(--henko-kurai-ao);
+}

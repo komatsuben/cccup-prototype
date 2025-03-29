@@ -4,7 +4,7 @@ head%}
     rel="stylesheet"
     href="{{url_for('matches_bp.static', filename='admin_global.css')}}"
 />{%endblock%} {% block content %}
-<div class="container dashboard__container">
+<div class="container dashboard__container" id="mother">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %}
     <div class="dashboard__flash-msg">
@@ -16,19 +16,21 @@ head%}
 
     <div class="dashboard__title">
         <h1>Edit Match</h1>
-        <button class="brutalist__button danger button__delete">
+        <button
+            class="brutalist__button danger button__delete"
+            onclick="togglePopup()"
+        >
             <i
                 class="ri-delete-bin-2-line"
                 style="font-size: var(--h3-scale)"
-            ></i
-            >
+            ></i>
         </button>
     </div>
 
     <!-- Demo Card: Updates Live -->
     <div class="dashboard__demo">
         <div class="dashboard__subtitle">
-            <h2>Display Demo</h2>
+            <h3>Display Demo</h3>
         </div>
         <div class="match__card">
             <div class="match__header">
@@ -53,7 +55,7 @@ head%}
     </div>
 
     <div class="dashboard__subtitle">
-        <h2>Match Information</h2>
+        <h3>Match Information</h3>
     </div>
 
     <div class="dashboard__form">
@@ -145,15 +147,51 @@ head%}
                     {% endfor %}
                 </div>
             </div>
-            <div class="form-actions">
+            <div class="form__selection">
                 <a
                     href="{{ url_for('matches_bp.admin_home') }}"
-                    class="btn-back"
+                    class="brutalist__button"
                     >Go back</a
                 >
-                <input type="submit" value="Edit Match" class="btn-submit" />
+                <input
+                    type="submit"
+                    value="Edit Match"
+                    class="brutalist__button"
+                />
             </div>
         </form>
+    </div>
+</div>
+<div class="brutalist__popup" style="display: none" id="popup">
+    <div class="popup__header">
+        <div class="popup__title">
+            <h2>Are you sure king?</h2>
+            <button
+                class="brutalist__button popup__close"
+                onclick="togglePopup()"
+            >
+                <i class="ri-close-large-line"></i>
+            </button>
+        </div>
+        <h6>This action is irreversible! Jgn nyesel</h6>
+    </div>
+    <div class="popup__selection">
+        <button
+            class="brutalist__button button__cancel"
+            onclick="togglePopup()"
+        >
+            Cancel
+        </button>
+        <button
+            class="brutalist__button button__confirm"
+            style="justify-content: space-evenly"
+        >
+            Confirm
+            <i
+                class="ri-delete-bin-2-line"
+                style="font-size: var(--h6-scale)"
+            ></i>
+        </button>
     </div>
 </div>
 {% endblock %} {% block scripts %}

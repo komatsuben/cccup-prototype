@@ -51,7 +51,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    /* TODO: I just committed something diabolical on Line 55 &
+    It still won't work as intended.
+    I will go fix it later, read the WTForms docs. */
+    font-family: "Inter", sans-serif !important;
     font-optical-sizing: auto;
     font-weight: normal;
     font-style: normal;
@@ -153,4 +156,57 @@ h6 {
     60% {
         transform: translate3d(2px, 0, 0);
     }
+}
+
+.brutalist__popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--henko-shiro);
+    border-radius: 0;
+    border: 1px solid var(--henko-kurai-ao);
+    box-shadow: 4px 4px 0px 0px var(--henko-kurai-ao);
+    padding: 2rem;
+    z-index: 1000;
+    width: 50vh;
+}
+
+.popup__header .popup__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup__close {
+    border: none;
+    padding: 0.5rem;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.popup__selection {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.popup__selection .button__cancel,
+.popup__selection .button__confirm {
+    height: var(--h2-scale);
+}
+.popup__selection .button__cancel {
+    margin-right: var(--small-scale);
+}
+.popup__selection .button__confirm {
+    margin-left: var(--small-scale);
+}
+
+.brutalist__popup h2 {
+    color: var(--henko-kurai-ao);
+}
+
+.brutalist__popup h6 {
+    color: var(--henko-ao);
+    margin-bottom: var(--h2-scale);
 }

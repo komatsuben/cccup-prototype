@@ -33,7 +33,7 @@
 .dashboard__title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: var(--h1-scale);
 }
 .dashboard__subtitle {
     margin: 0.5rem 0;
@@ -43,8 +43,8 @@
     color: var(--dark);
     font-size: var(--h1-scale);
 }
-.dashboard__subtitle h2 {
-    color: var(--tertiary);
+.dashboard__subtitle h3 {
+    color: var(--dark);
 }
 
 /* Form */
@@ -84,9 +84,17 @@
     font-size: 0.9rem;
     margin-top: 0.25rem;
 }
-.form-actions {
+
+.form__selection {
+    display: flex;
+    justify-content: end;
     margin-top: 1.5rem;
-    text-align: end;
+}
+
+.form__selection a,
+.form__selection input {
+    height: var(--h2-scale);
+    margin: 0 0 0 var(--h5-scale);
 }
 
 .button__delete {
@@ -453,4 +461,9 @@
         font-size: 0.9rem;
         padding: 0.5rem 1rem;
     }
+}
+
+.blur {
+    filter: blur(5px);
+    transition: filter var(--transition-speed) ease-in-out;
 }

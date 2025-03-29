@@ -182,15 +182,9 @@ def view_match(id):
     
     except Exception as e:
         return f"Error fetching match: {e}", 500
-
-
+    
 @matches_bp.route('/add_match', methods=["GET", "POST"])
 def add_match():
-    # user = session.get('user', {})
-    # if not user:
-    #     return redirect(url_for('admin_bp.login'))
-    
-    
     form = MatchesForm()
     
     if form.validate_on_submit():
@@ -203,47 +197,30 @@ def add_match():
             elif key.startswith('team2_set'):
                 team2_set_scores.append(int(request.form[key]))
         
-        match = {
-            "competition": form.competition.data,
-            "team1": form.team1.data,
-            "team2": form.team2.data,
-            "team1_score": form.team1_score.data,
-            "team2_score": form.team2_score.data,
-            "status": form.status.data,
-            "venue": form.venue.data,
-            "stage": form.stage.data,
-            "level": form.level.data,
-            "streaming_link": form.streaming_link.data,
-            # "time": form.time.data.strftime("%d %b %Y %H:%M"),
-            # "last_updated": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            # ISO FORMAT
-            "time": form.time.data.strftime("%Y-%m-%d %H:%M:%S"),
-            "last_updated": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            "team1_set": team1_set_scores,
-            "team2_set": team2_set_scores,
-        }
-        INSERT_MATCH_QUERY = """
-        INSERT INTO matches (
-            competition, team1, team2, team1_score, team2_score, status, 
-            venue, stage, level, streaming_link, time, last_updated, 
-            team1_set, team2_set
-            ) 
-            VALUES (
-                %(competition)s, %(team1)s, %(team2)s, %(team1_score)s, %(team2_score)s, %(status)s, 
-                %(venue)s, %(stage)s, %(level)s, %(streaming_link)s, %(time)s, %(last_updated)s, 
-                %(team1_set)s, %(team2_set)s
-                ) RETURNING id;
-            """
+        new_match = Match(
+            competition=form.competition.data,
+            team1=form.team1.data,
+            team2=form.team2.data,
+            team1_score=form.team1_score.data,
+            team2_score=form.team2_score.data,
+            status=form.status.data,
+            venue=form.venue.data,
+            stage=form.stage.data,
+            level=form.level.data,
+            streaming_link=form.streaming_link.data,
+            time=form.time.data,  # Assuming it's already a datetime object
+            last_updated=datetime.utcnow(),
+            team1_set=team1_set_scores,
+            team2_set=team2_set_scores
+        )
+
         try:
-            cur = connection.cursor()
-            cur.execute(INSERT_MATCH_QUERY, match)
-            inserted_id = cur.fetchone()[0]
-            connection.commit()
-            cur.close()
+            db.session.add(new_match)
+            db.session.commit()
             flash("Match added successfully", "success")
-            return redirect(url_for('matches_bp.update_match', id=inserted_id))
+            return redirect(url_for('matches_bp.update_match', id=new_match.id))
         except Exception as e:
-            connection.rollback()
+            db.session.rollback()
             flash(f"Error adding match: {e}", "danger")
     return render_template('matches/add_match.html', form=form)
 

@@ -33,3 +33,18 @@ selects.forEach(select => {
 
 // Initial call to update demo on page load
 updateDemo();
+
+
+//Function to handle popup
+function togglePopup() {
+    const popup = document.getElementById('popup');
+    const everything = document.getElementById('mother');
+
+    if (popup.style.display === 'block') {
+        popup.style.display = 'none';
+        everything.style.filter = 'none';
+    } else {
+        popup.style.display = 'block';
+        everything.style.filter = 'blur(3px) grayscale(0.5)';
+    }
+}

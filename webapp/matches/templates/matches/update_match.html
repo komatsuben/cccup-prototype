@@ -2,9 +2,9 @@
 head%}
 <link
     rel="stylesheet"
-    href="{{url_for('matches_bp.static', filename='global.css')}}"
+    href="{{url_for('matches_bp.static', filename='admin_global.css')}}"
 />{%endblock%} {% block content %}
-<div class="container">
+<div class="container dashboard__container">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %}
     <div class="dashboard__flash-msg">
@@ -16,6 +16,13 @@ head%}
 
     <div class="dashboard__title">
         <h1>Edit Match</h1>
+        <button class="brutalist__button danger button__delete">
+            <i
+                class="ri-delete-bin-2-line"
+                style="font-size: var(--h3-scale)"
+            ></i
+            >
+        </button>
     </div>
 
     <!-- Demo Card: Updates Live -->

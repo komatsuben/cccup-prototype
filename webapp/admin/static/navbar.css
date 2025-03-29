@@ -1,8 +1,19 @@
+header {
+    background-color: var(--primary);
+    display: flex;
+    justify-content: center;
+}
+
 nav {
     display: flex;
-    background-color: var(--primary);
+    /* background-color: var(--dark); */
+    border: 1px solid var(--dark);
+    background-color: var(--secondary);
     padding: 2vh 2vw;
     justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
 }
 
 .nav__logo {
@@ -11,11 +22,14 @@ nav {
     width: 30%;
 }
 
+.nav__logo h3 {
+    color: var(--dark);
+}
+
 .nav__container {
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: wheat;
 }
 
 .nav__pages {
@@ -41,6 +55,17 @@ nav {
 .nav__pages--mobile {
     display: none;
     flex-direction: column;
+}
+
+.nav__item a {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: var(--bold-weight);
+}
+
+.nav__item a:hover {
+    color: var(--dark);
+    text-decoration: underline;
 }
 
 .nav__item button {

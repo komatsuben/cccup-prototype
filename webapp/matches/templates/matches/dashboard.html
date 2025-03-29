@@ -2,13 +2,16 @@
 block head %}
 <link
     rel="stylesheet"
-    href="{{ url_for('matches_bp.static', filename='global.css') }}"
+    href="{{ url_for('matches_bp.static', filename='admin_global.css') }}"
 />
 {% endblock %} {% block content %}
 <div class="container">
     <div class="matches__head">
         <h1>Matches</h1>
-        <a href="{{url_for('matches_bp.add_match')}}" class="btn--add-match">
+        <a
+            href="{{url_for('matches_bp.add_match')}}"
+            class="brutalist__button btn--add_match"
+        >
             <i class="ri-add-circle-line"></i> Add Match</a
         >
     </div>

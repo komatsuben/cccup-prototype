@@ -2,10 +2,14 @@
 block head %}
 <link
     rel="stylesheet"
-    href="{{ url_for('matches_bp.static', filename='global.css') }}"
+    href="{{ url_for('matches_bp.static', filename='admin_global.css') }}"
+/>
+<link
+    rel="stylesheet"
+    href="{{url_for('main_bp.static', filename='brutalist.css')}}"
 />
 {% endblock %} {% block content %}
-<div class="container">
+<div class="container dashboard__container">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %}
     <div class="dashboard__flash-msg">

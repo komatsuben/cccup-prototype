@@ -47,6 +47,7 @@ admin_bp = Blueprint(
 )
 
 # Basic admin login & logout handler
+# TODO: migrate login & logout from mongodb to psql
 @admin_bp.route("/login", methods=["GET", "POST"])
 def login():
     # Get the client's IP address

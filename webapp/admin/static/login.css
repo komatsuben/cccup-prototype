@@ -58,29 +58,14 @@
     }
 }
 
+.login__button {
+    padding: 0.75rem;
+    justify-content: space-evenly;
+}
+
 .login__user:focus,
 .login__password:focus {
     outline: double var(--henko-kurai-ao);
-}
-
-.brutalist__button {
-    border-radius: 0;
-    border: none;
-    color: var(--henko-shiro);
-    background-color: var(--henko-kurai-ao);
-    padding: 0.75rem;
-    width: 8rem;
-    transition: all var(--transition-speed) ease;
-    font-size: var(--h6-scale);
-}
-
-.brutalist__button:hover {
-    background-color: var(--henko-ao);
-    box-shadow: 4px 4px 0px 0px var(--henko-mizu-iro);
-}
-
-.brutalist__button:focus {
-    outline: thick double var(--henko-kurai-ao);
 }
 
 .brutalist__checkbox {

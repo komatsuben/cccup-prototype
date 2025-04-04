@@ -12,11 +12,14 @@
 }
 
 .login h1 {
-    color: var(--henko-kurai-ao);
+    color: var(--henko-shiro);
+    /* text-align: center; */
+    -webkit-text-stroke: 1px var(--henko-kurai-ao);
 }
 
-.login h2 {
+.login h4 {
     color: var(--henko-ao);
+    /* text-align: center; */
 }
 
 /* .login__head {
@@ -81,6 +84,19 @@
     display: flex;
     justify-content: end;
     align-items: center;
+}
+
+.login__select {
+    background-color: var(--henko-shiro);
+    border: 1px solid var(--henko-kurai-ao);
+    height: 2.1028rem;
+    padding-left: 1rem;
+    transition: all var(--transition-speed) ease;
+    color: var(--henko-kurai-ao);
+}
+
+.login__select:focus {
+    outline: double var(--henko-kurai-ao);
 }
 
 .brutalist__checkbox:checked {

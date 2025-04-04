@@ -1,15 +1,12 @@
+/* Note2self: Technically this is an extension of brutalism.css over at main_bp */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --light: #fff;
-    --secondary: #f6f4eb;
-    --primary: #91c8e4;
-    --tertiary: #749bc2;
-    --dark: #4682a9;
+*:focus {
+    outline: 1px solid var(--henko-kurai-ao);
 }
 
 /* Main Container */
@@ -22,8 +19,8 @@
     margin-bottom: 1rem;
 }
 .dashboard__flash-msg .alert {
-    background-color: var(--primary);
-    color: var(--dark);
+    background-color: var(--henko-mizu-iro);
+    color: var(--henko-kurai-ao);
     padding: 0.5rem 1rem;
     margin-bottom: 0.5rem;
     border-radius: 4px;
@@ -40,16 +37,16 @@
     text-align: start;
 }
 .dashboard__title h1 {
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     font-size: var(--h1-scale);
 }
 .dashboard__subtitle h3 {
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
 }
 
 /* Form */
 .dashboard__form {
-    border: 1px solid var(--dark);
+    border: 1px solid var(--henko-kurai-ao);
     padding: 2rem;
     /* border-radius: 8px; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -65,7 +62,7 @@
 }
 .form-group label {
     font-weight: bold;
-    color: var(--tertiary);
+    color: var(--henko-ao);
     margin-bottom: 0.5rem;
 }
 .form-group .required {
@@ -74,11 +71,12 @@
 }
 .form-control {
     padding: 0.5rem;
-    border: 1px solid var(--dark);
+    border: 1px solid var(--henko-kurai-ao);
     /* border-radius: 4px; */
-    background-color: var(--secondary);
-    color: var(--dark);
+    background-color: var(--henko-shiro);
+    color: var(--henko-kurai-ao);
 }
+
 .error {
     color: red;
     font-size: 0.9rem;
@@ -105,8 +103,8 @@
 }
 
 .btn-submit {
-    background-color: var(--primary);
-    color: var(--dark);
+    background-color: var(--henko-mizu-iro);
+    color: var(--henko-kurai-ao);
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 4px;
@@ -115,12 +113,12 @@
     transition: background-color 0.3s ease;
 }
 .btn-submit:hover {
-    background-color: var(--tertiary);
+    background-color: var(--henko-ao);
     color: var(--light);
 }
 .btn-back {
-    background-color: var(--secondary);
-    color: var(--dark);
+    background-color: var(--henko-shiro);
+    color: var(--henko-kurai-ao);
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 4px;
@@ -130,7 +128,7 @@
     text-decoration: none;
 }
 .btn-back:hover {
-    background-color: var(--tertiary);
+    background-color: var(--henko-ao);
     color: var(--light);
 }
 
@@ -157,42 +155,42 @@
 
 .heading h2 {
     font-size: 1.8rem;
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    /* border-bottom: 2px solid var(--primary); */
+    /* border-bottom: 2px solid var(--henko-mizu-iro); */
     text-align: center;
 }
 
 .heading h2 {
     font-size: 1.8rem;
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    /* border-bottom: 2px solid var(--primary); */
+    /* border-bottom: 2px solid var(--henko-mizu-iro); */
     text-align: center;
 }
 
 .competition__section h3 {
     font-size: 1.8rem;
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--henko-mizu-iro);
 }
 
 .matches__container {
     margin-bottom: 3rem;
-    background-color: var(--secondary);
+    background-color: var(--henko-shiro);
 }
 
 /* Section Heading */
 .matches__container h2 {
     font-size: 1.8rem;
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--henko-mizu-iro);
 }
 
 /* Grid for Match Cards */
@@ -206,9 +204,9 @@
 .match__card {
     display: flex;
     flex-direction: column;
-    background-color: var(--secondary);
-    color: var(--dark);
-    border: 1px solid var(--tertiary);
+    background-color: var(--henko-shiro);
+    color: var(--henko-kurai-ao);
+    border: 1px solid var(--henko-ao);
     /* border-radius: 8px; */
     overflow: hidden;
     transition: all var(--transition-speed) ease;
@@ -217,31 +215,31 @@
 
 .match__card:hover {
     transform: translateY(-5px);
-    background-color: var(--dark);
-    color: var(--secondary);
-    border: 1px solid var(--dark);
+    background-color: var(--henko-kurai-ao);
+    color: var(--henko-shiro);
+    border: 1px solid var(--henko-kurai-ao);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .match__card:hover .match__header {
-    border-bottom: 1px solid var(--secondary);
+    border-bottom: 1px solid var(--henko-shiro);
 }
 
 .match__card:hover .match__info {
-    color: var(--secondary);
+    color: var(--henko-shiro);
 }
 
 .match__card:hover .match__teams {
-    border-bottom: 1px solid var(--secondary);
+    border-bottom: 1px solid var(--henko-shiro);
 }
 
 .match__card:hover .match__details {
-    border: 1px solid var(--secondary);
+    border: 1px solid var(--henko-shiro);
 }
 
 /* Match Header */
 .match__header {
-    border-bottom: 1px solid var(--tertiary);
+    border-bottom: 1px solid var(--henko-ao);
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -254,7 +252,7 @@
 }
 /* Special status styling */
 .match__header .stage.played {
-    background-color: var(--tertiary);
+    background-color: var(--henko-ao);
     color: var(--light);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
@@ -265,7 +263,7 @@
     display: flex;
     justify-content: space-around;
     padding: 1rem;
-    border-bottom: 1px solid var(--dark);
+    border-bottom: 1px solid var(--henko-kurai-ao);
 }
 .match__team {
     display: flex;
@@ -288,15 +286,15 @@
     display: flex;
     justify-content: space-between;
     font-size: var(--small-scale);
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
 }
 
 .match__details {
-    border: 1px solid var(--dark);
+    border: 1px solid var(--henko-kurai-ao);
     padding: 0.25rem 0.15rem;
     /* border-radius: 4px; */
-    color: var(--dark);
-    background-color: var(--secondary);
+    color: var(--henko-kurai-ao);
+    background-color: var(--henko-shiro);
     transition: all 0s !important;
 }
 
@@ -350,7 +348,7 @@
 .match-container {
     margin: 0 15vw;
     min-height: 100vh;
-    background-color: var(--secondary);
+    background-color: var(--henko-shiro);
     padding: 2rem;
     border-radius: 8px;
 }
@@ -359,14 +357,14 @@
 .match-container h1 {
     text-align: center;
     font-size: 2rem;
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     margin-bottom: 0.5rem;
 }
 
 .match-container h2 {
     text-align: center;
     font-size: 1.5rem;
-    color: var(--tertiary);
+    color: var(--henko-ao);
     margin-bottom: 1rem;
 }
 
@@ -397,7 +395,7 @@
 .scoreboard__score {
     font-size: 2rem;
     font-weight: bold;
-    color: var(--tertiary);
+    color: var(--henko-ao);
 }
 
 .scoreboard__versus {

@@ -73,6 +73,8 @@ def serialize_match(match):
 
 @matches_bp.route('/dashboard')
 def admin_home():
+    
+    
     matches = Match.query.all()
     matches = [serialize_match(match) for match in matches]
     
@@ -260,3 +262,23 @@ def update_match(id):
             flash(f"Error updating match: {e}", "danger")
 
     return render_template('matches/update_match.html', form=form, match_id=id, current_time=current_time)
+
+
+@matches_bp.route('/remove_match/<id>', methods=['POST', 'GET'])
+def remove_match(id):
+    # user = session.get('user', {})
+    # if not user:
+    #     return redirect(url_for('admin_bp.login'))
+    
+    match = Match.query.get(id)
+    if match:
+        try:
+            db.session.delete(match)
+            db.session.commit()
+            flash("Match has been deleted", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error deleting match: {e}", "danger")
+    else:
+        flash("Match not found.", "danger")
+    return redirect(url_for('matches_bp.admin_home'))

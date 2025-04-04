@@ -8,6 +8,8 @@ from wtforms import PasswordField
 from flask import Blueprint, render_template, abort, redirect, url_for, request, session, current_app, flash, jsonify
 from jinja2 import TemplateNotFound
 
+from datetime import datetime
+from .happy_little_workers import log_admin_action
 import pytz, json
 
 JAKARTA_TZ = pytz.timezone('Asia/Jakarta')
@@ -54,20 +56,22 @@ def login():
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
 
     if request.method == "POST":
-        mongo_main = current_app.extensions['mongo_main']
-        collection = mongo_main.db.admin_user
-        
         username = request.form.get("username")
         password = request.form.get("password")
-        user_data = collection.find_one({"username": username})
+        
 
-        if user_data and check_password_hash(user_data['password'], password):
-            # session['user'] = serialize_document(user_data)
-            #logging.info(f"Successful login by {username} from IP: {client_ip}")
-            return redirect(url_for('admin_bp.index'))
-        else:
+        # Query the admin user from PostgreSQL
+        user = Admin.query.filter_by(username=username).first()
+
+        if not user or not check_password_hash(user.password_hash, password):
+            log_admin_action(user.id if user else None, "Failed login attempt")
             flash("Invalid username or password", "error")
-            #logging.warning(f"Failed login attempt by {username} from IP: {client_ip}")
+            return redirect(url_for('admin_bp.login'))
+        
+        session["user"] = {"id": user.id, "username": user.username, "role": user.role}
+        log_admin_action(user.id, "Successful login")
+        flash("Login successful", "success")
+        return redirect(url_for('admin_bp.dashboard'))
 
     return render_template("admin/login.html")
 
@@ -87,14 +91,14 @@ def home():
     if not user: return redirect(url_for('admin_bp.login'))
     return render_template("admin/dashboard.html")
 
-@admin_bp.route('/profile')
+@admin_bp.route('/panel/profile')
 def whoami():
     user = session.get('user', {})
     username = user.get('username', 'Guest')
     role = user.get('role', 'Unknown')
     return f"Username:{username}, Role: {role}"
 
-@admin_bp.route('/panel/regis')
+@admin_bp.route('/panel/registration', methods=['GET'])
 def admin_panel_regis():
     user = session.get('user', {})
     if not user: return redirect(url_for('admin_bp.login'))
@@ -117,7 +121,7 @@ def admin_panel_regis():
     # return render_template("admin/panel_regis.html", user=user, users=users, comp_choices=COMPETITION_CHOICES)
     return render_template("admin/panel_registration.html")
 
-@admin_bp.route('/competition-status', methods=['GET'])
+@admin_bp.route('/panel/competition-status', methods=['GET'])
 def competition_status():
     
     # Retrieve query parameters for filtering
@@ -193,16 +197,68 @@ def competition_status():
 
 
 # Super Admin(King👑) Pages
-@admin_bp.route('/admins', methods=["GET"])
+# Define SQLAlchemy Model
+@admin_bp.route('/signup', methods=["GET", "POST"])
+def super_signup():
+    user = session.get('user', {})
+    role = user.get('role')
+    # if not user:
+    #     return redirect(url_for('admin_bp.login'))
+    # if role != 'super_admin':
+    #     return redirect(url_for('admin_bp.home'))
+    
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        role = request.form.get("role")
+        created_at = datetime.now(JAKARTA_TZ)
+        
+        if not username or not password or not role:
+            flash("All fields are required", "error")
+            return jsonify({"error": "All fields are required"}), 400
+        
+        if role not in ROLE_CHOICES:
+            flash("Invalid role provided", "error")
+            return jsonify({"error": "Invalid role"}), 400
+        
+        existing_user = Admin.query.filter_by(username=username).first()
+        if existing_user:
+            flash("Username already exists", "error")
+            return jsonify({"error": "Username already exists"}), 400
+        
+        hashed_password = generate_password_hash(password)
+        new_user = Admin(username=username, password=hashed_password, role=role, created_at=created_at)
+        
+        db.session.add(new_user)
+        db.session.commit()
+        flash("User successfully created", "success")
+        
+    return render_template("admin/signup.html", role=role, choices=ROLE_CHOICES)
+
+@admin_bp.route('/panel/admin/')
+def super_home():
+    user = session.get('user', {})
+    role = user.get('role')
+    if not user or role != 'super_admin': return redirect(url_for('admin_bp.login'))
+    
+    
+    if role == 'super_admin':
+        return render_template("admin/super_admin.html")
+    else:
+        return redirect(url_for('admin_bp.home'))
+
+@admin_bp.route('/panel/admin/admins', methods=["GET"])
 def get_admins():
     user = session.get('user', {})
-    if not user: return redirect(url_for('admin_bp.login'))
+    role = user.get('role')
+    if not user or role != 'super_admin': return redirect(url_for('admin_bp.login'))
+    
     
     # admins = list(collection.find())
     # admins = [serialize_document(admin) for admin in admins]
     # return jsonify(admins), 200
     
-@admin_bp.route('/admin/<username>')
+@admin_bp.route('/panel/admin/<username>')
 def find_admin(username):
     user = session.get('user', {})
     if not user: return redirect(url_for('admin_bp.login'))
@@ -217,14 +273,14 @@ def find_admin(username):
         return jsonify(user), 200
     return jsonify({"error": "User not found"}), 404
 
-@admin_bp.route('/admin/<username>/update', methods=['PUT'])
+@admin_bp.route('/panel/admin/<username>/update', methods=['PUT'])
 def update_admin():
     user = session.get('user', {})
     role = user.get('role')
     if not user: return redirect(url_for('admin_bp.login'))
     pass
 
-@admin_bp.route('/admin/<username>/delete', methods=["DELETE"])
+@admin_bp.route('/panel/admin/<username>/delete', methods=["DELETE"])
 def delete_admin():
     user = session.get('user', {})
     role = user.get('role')

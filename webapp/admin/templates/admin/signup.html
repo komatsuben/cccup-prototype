@@ -8,8 +8,8 @@ block head%}
 <div class="container center">
     <div class="login">
         <div class="login__head">
-            <h1>Login ..</h1>
-            <h4>Welcome Back!</h4>
+            <h1>Signup ..</h1>
+            <h4>Buat <del>babu</del> admin baru!</h4>
         </div>
 
         {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -22,7 +22,19 @@ block head%}
         {% endif %} {% endwith %}
 
         <div class="login__form">
-            <form action="/admin/login" method="post">
+            <form action="/admin/signup" method="post">
+                <div class="login__field">
+                    <label for="role">Role</label>
+                    <select
+                        name="role"
+                        id="role"
+                        class="login__select"
+                        required
+                    >
+                        <option value="admin" selected>Admin</option>
+                        <option value="super_admin">Super Admin</option>
+                    </select>
+                </div>
                 <div class="login__field">
                     <label for="username">Username</label>
                     <input
@@ -55,7 +67,7 @@ block head%}
                     </label>
                 </div>
                 <button type="submit" class="brutalist__button login__button">
-                    Login <i class="ri-arrow-right-up-box-line"></i>
+                    Create <i class="ri-arrow-right-up-box-line"></i>
                 </button>
             </form>
         </div>

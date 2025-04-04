@@ -1,13 +1,13 @@
 header {
-    background-color: var(--primary);
+    background-color: var(--henko-ao);
     display: flex;
     justify-content: center;
 }
 
 nav {
     display: flex;
-    /* background-color: var(--dark); */
-    border: 1px solid var(--dark);
+    /* background-color: var(--henko-kurai-ao); */
+    border: 1px solid var(--henko-kurai-ao);
     background-color: var(--secondary);
     padding: 2vh 2vw;
     justify-content: space-between;
@@ -23,7 +23,7 @@ nav {
 }
 
 .nav__logo h3 {
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
 }
 
 .nav__container {
@@ -58,13 +58,13 @@ nav {
 }
 
 .nav__item a {
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     text-decoration: none;
     font-weight: var(--bold-weight);
 }
 
 .nav__item a:hover {
-    color: var(--dark);
+    color: var(--henko-kurai-ao);
     text-decoration: underline;
 }
 
@@ -73,7 +73,7 @@ nav {
 }
 
 .nav__registerAccount--mobile button {
-    background-color: var(--dark);
+    background-color: var(--henko-kurai-ao);
 }
 
 .nav__burger {

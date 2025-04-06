@@ -69,14 +69,17 @@ def login():
             return redirect(url_for('admin_bp.login'))
         
         session["user"] = {"id": user.id, "username": user.username, "role": user.role}
+        print(session["user"])
         log_admin_action(user.id, "Successful login")
         flash("Login successful", "success")
-        return redirect(url_for('admin_bp.dashboard'))
+        return redirect(url_for('admin_bp.home'))
 
     return render_template("admin/login.html")
 
 @admin_bp.route('/logout')
 def logout():
+    user = session.get('user', {})
+    if not user: return redirect(url_for('admin_bp.login'))
     session.clear()
     return redirect(url_for('admin_bp.login'))
 
@@ -89,6 +92,7 @@ def redirect_home():
 def home():
     user = session.get('user', {})
     if not user: return redirect(url_for('admin_bp.login'))
+    
     return render_template("admin/dashboard.html")
 
 @admin_bp.route('/panel/profile')
@@ -96,7 +100,8 @@ def whoami():
     user = session.get('user', {})
     username = user.get('username', 'Guest')
     role = user.get('role', 'Unknown')
-    return f"Username:{username}, Role: {role}"
+    display_role = "Super Admin" if role == "super_admin" else "Admin"
+    return render_template("admin/profile.html", username=username, role=display_role)
 
 @admin_bp.route('/panel/registration', methods=['GET'])
 def admin_panel_regis():
@@ -210,10 +215,11 @@ def super_signup():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        email = request.form.get("email")
         role = request.form.get("role")
         created_at = datetime.now(JAKARTA_TZ)
         
-        if not username or not password or not role:
+        if not username or not password or not role or not email:
             flash("All fields are required", "error")
             return jsonify({"error": "All fields are required"}), 400
         
@@ -227,7 +233,7 @@ def super_signup():
             return jsonify({"error": "Username already exists"}), 400
         
         hashed_password = generate_password_hash(password)
-        new_user = Admin(username=username, password=hashed_password, role=role, created_at=created_at)
+        new_user = Admin(username=username, email=email, password_hash=hashed_password, role=role, created_at=created_at)
         
         db.session.add(new_user)
         db.session.commit()

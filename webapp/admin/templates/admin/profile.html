@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %} {%block title%} Dashboard {%endblock%} {% block
+content %}
+<div class="container">
+    <div class="dashboard__title">
+        <h1>Profile Information</h1>
+    </div>
+    <div class="dashboard__panels flex justifyContent--spaceBetween">
+        <span class="w-25">
+            <div class="dashboard__item my-1">
+                <h6>Username</h6>
+                <div class="brutalist__container--bordered">{{username}}</div>
+            </div>
+            <div class="dashboard__item my-1">
+                <h6>Role</h6>
+                <div class="brutalist__container--bordered">{{role}}</div>
+            </div>
+            <div class="dashboard__item">
+                <a
+                    href="{{url_for('matches_bp.add_match')}}"
+                    class="dashboard__link"
+                >
+                    Go Back
+                </a>
+            </div>
+        </span>
+        <span>
+            <div class="dashboard__item my-1">
+                <img
+                    src="{{ url_for('admin_bp.static', filename='variant_1.gif') }}"
+                    alt=""
+                />
+            </div>
+        </span>
+    </div>
+</div>
+{% endblock %}

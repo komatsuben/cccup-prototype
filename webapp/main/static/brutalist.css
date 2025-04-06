@@ -210,3 +210,47 @@ h6 {
     color: var(--henko-ao);
     margin-bottom: var(--h2-scale);
 }
+
+.brutalist__container--bordered {
+    border: 1px solid var(--henko-kurai-ao);
+}
+
+.flex {
+    display: flex;
+}
+
+.justifyContent--center {
+    justify-content: center;
+}
+.justifyContent--end {
+    justify-content: center;
+}
+.justifyContent--spaceBetween {
+    justify-content: space-between;
+}
+.justifyContent--center {
+    justify-content: center;
+}
+
+.my-1 {
+    margin-bottom: 1rem;
+}
+
+.mx-5 {
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.mr-5 {
+    margin-right: 5rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+.w-50 {
+    width: 50%;
+}
+.w-25 {
+    width: 25%;
+}

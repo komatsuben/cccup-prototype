@@ -75,9 +75,22 @@ block head %}
         {% endfor %}
     </div>
     {% endif %}
+
     <div class="heading">
         <h2>All Matches</h2>
     </div>
+    <form onsubmit="return false;" class="mb-3">
+        <div class="search">
+            <i class="ri-search-line"></i>
+            <input
+                type="text"
+                id="searchInput"
+                class="search__input"
+                placeholder="Search..."
+                onchange="filterItems()"
+            />
+        </div>
+    </form>
     {% for matches, levels in grouped_matches.items() %}
     <div class="matches__container">
         {% for level, match_list in levels.items() %}
@@ -119,4 +132,6 @@ block head %}
     </div>
     {% endfor %}
 </div>
-{% endblock %}
+{% endblock %} {% block scripts %}
+<script src="{{url_for('matches_bp.static', filename='js/global.js')}}"></script>
+{%endblock%}

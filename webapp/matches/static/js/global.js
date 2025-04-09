@@ -1,6 +1,5 @@
 // Function to update demo card based on form values.
 function updateDemo() {
-    // Retrieve values from input fields
     const stage = document.getElementById('input-stage').value;
     const status = document.getElementById('input-status').value;
     const team1 = document.getElementById('input-team1').value;
@@ -9,7 +8,6 @@ function updateDemo() {
     const team2Score = document.getElementById('input-team2-score').value;
     const time = document.getElementById('input-time').value;
 
-    // Update the demo elements
     document.getElementById('demo-stage').innerText = stage || 'Stage';
     document.getElementById('demo-status').innerText = status || 'Status';
     document.getElementById('demo-team1').innerText = team1 || 'Team 1';
@@ -46,5 +44,20 @@ function togglePopup() {
     } else {
         popup.style.display = 'block';
         everything.style.filter = 'blur(3px) grayscale(0.5)';
+    }
+}
+
+// Function to handle dynamic searching
+function filterItems() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let items = document.getElementsByClassName('matches__container');
+
+    for (let i = 0; i < items.length; i++) {
+        let text = items[i].textContent.toLowerCase();
+        if (text.includes(input)) {
+            items[i].classList.remove('hidden');
+        } else {
+            items[i].classList.add('hidden');
+        }
     }
 }

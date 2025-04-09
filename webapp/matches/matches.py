@@ -73,7 +73,9 @@ def serialize_match(match):
 
 @matches_bp.route('/dashboard')
 def admin_home():
-    
+    user = session.get('user', {})
+    if not user:
+        return redirect(url_for('admin_bp.login'))
     
     matches = Match.query.all()
     matches = [serialize_match(match) for match in matches]

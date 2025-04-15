@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DEVELOPMENT_DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config['SESSION_COOKIE_NAME'] = 'session'
 
 db.init_app(app)
 migrate = Migrate(app, db)

@@ -23,7 +23,6 @@ block head %}
         {% for competition, matches in ongoing_grouped_matches.items() %}
         <div class="competition__section">
             <h3>{{ competition }}</h3>
-            {# Now competition is correctly rendered #}
             <div class="swiper">
                 <div class="swiper-wrapper">
                     {% for match in matches %}
@@ -41,7 +40,7 @@ block head %}
                             <div class="match__teams">
                                 <div class="match__team">
                                     <span class="team__name">
-                                        {{ match['team1'] }}
+                                        {{ match['team1'].replace('_', ' ') }}
                                     </span>
                                     <span class="team__score"
                                         >{{ match['team1_score'] }}</span
@@ -49,7 +48,7 @@ block head %}
                                 </div>
                                 <div class="match__team">
                                     <span class="team__name">
-                                        {{ match['team2'] }}
+                                        {{ match['team2'].replace('_', ' ') }}
                                     </span>
                                     <span class="team__score"
                                         >{{ match['team2_score'] }}</span
@@ -109,13 +108,17 @@ block head %}
                 </div>
                 <div class="match__teams">
                     <div class="match__team">
-                        <span class="team__name"> {{match['team1']}} </span>
+                        <span class="team__name">
+                            {{ match['team1'].replace('_', ' ') }}
+                        </span>
                         <span class="team__score"
                             >{{match['team1_score']}}</span
                         >
                     </div>
                     <div class="match__team">
-                        <span class="team__name"> {{match['team2']}} </span>
+                        <span class="team__name">
+                            {{ match['team2'].replace('_', ' ') }}
+                        </span>
                         <span class="team__score"
                             >{{match['team2_score']}}</span
                         >

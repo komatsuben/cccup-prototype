@@ -77,6 +77,8 @@ def admin_home():
     if not user:
         return redirect(url_for('admin_bp.login'))
     
+    print(user)
+    
     matches = Match.query.all()
     matches = [serialize_match(match) for match in matches]
     

@@ -78,9 +78,9 @@ def login():
 
 @admin_bp.route('/logout')
 def logout():
-    user = session.get('user', {})
-    if not user: return redirect(url_for('admin_bp.login'))
+    print("Session before clear:", dict(session))
     session.clear()
+    print("Session after clear:", dict(session))
     return redirect(url_for('admin_bp.login'))
 
 # Normal Admin Panel Pages
@@ -91,7 +91,7 @@ def redirect_home():
 @admin_bp.route('/panel/')
 def home():
     user = session.get('user', {})
-    if not user: return redirect(url_for('admin_bp.login'))
+    if user: return redirect(url_for('admin_bp.login'))
     
     return render_template("admin/dashboard.html")
 

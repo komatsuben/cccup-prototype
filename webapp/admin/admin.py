@@ -69,9 +69,10 @@ def login():
             return redirect(url_for('admin_bp.login'))
         
         session["user"] = {"id": user.id, "username": user.username, "role": user.role}
-        print(session["user"])
+        
         log_admin_action(user.id, "Successful login")
         flash("Login successful", "success")
+        
         return redirect(url_for('admin_bp.home'))
 
     return render_template("admin/login.html")
@@ -91,7 +92,7 @@ def redirect_home():
 @admin_bp.route('/panel/')
 def home():
     user = session.get('user', {})
-    if user: return redirect(url_for('admin_bp.login'))
+    if not user: return redirect(url_for('admin_bp.login'))
     
     return render_template("admin/dashboard.html")
 

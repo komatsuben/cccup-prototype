@@ -4,7 +4,7 @@
   -- @version 1.0
   -- @date 16.03.2025
   -- @url cccup.id/admin
-  -- @authors: 
+  -- @authors: @komatsuben
 -->
 <html lang="en">
     <head>
@@ -34,7 +34,7 @@
         <header>1 Minute left before open gate</header>
         <nav>
             <div class="nav__logo">
-                <h3>Admin Panel CCCUP XL</h3>
+                <h3>.panel</h3>
                 <div>
                     <button class="nav__burger">
                         <i class="ri-menu-3-line"></i>
@@ -57,52 +57,75 @@
                         <a
                             id="homeButton"
                             href="{{url_for('matches_bp.admin_home')}}"
-                            >Matches</a
+                            >Status</a
+                        >
+                    </div>
+                    <div class="nav__item">
+                        <a
+                            id="homeButton"
+                            href="{{url_for('matches_bp.admin_home')}}"
+                            >Registration</a
                         >
                     </div>
                 </div>
                 <div class="nav__registerAccount">
                     <div class="nav__item">
-                        <a id="loginButton" href="{{url_for('admin_bp.logout')}}"
+                        <a
+                            id="loginButton"
+                            href="{{url_for('admin_bp.logout')}}"
                             >Logout</a
                         >
                     </div>
                 </div>
             </div>
         </nav>
+
+        <!-- Mobile Bottom Navigation -->
         <div class="nav__container--mobile">
             <div class="nav__pages--mobile">
                 <div class="nav__item">
-                    <a id="homeButton" href="{{url_for('main_bp.home')}}">
-                        <button>Home</button>
+                    <a href="{{ url_for('admin_bp.home') }}">
+                        <button>
+                            <i class="ri-home-fill"></i>
+                            <span>Home</span>
+                        </button>
                     </a>
                 </div>
                 <div class="nav__item">
-                    <a id="homeButton" href="{{url_for('main_bp.home')}}"
-                        ><button>Competition</button></a
-                    >
+                    <a href="{{ url_for('admin_bp.home') }}">
+                        <button>
+                            <i class="ri-trophy-line"></i>
+                            <span>Competition</span>
+                        </button>
+                    </a>
                 </div>
                 <div class="nav__item">
-                    <a
-                        id="matchesButton"
-                        href="{{url_for('matches_bp.admin_home')}}"
-                        ><button>Matches</button></a
-                    >
+                    <a href="{{ url_for('admin_bp.home') }}">
+                        <button>
+                            <i class="ri-shopping-bag-line"></i>
+                            <span>Status</span>
+                        </button>
+                    </a>
                 </div>
                 <div class="nav__item">
-                    <a id="merchButton" href="{{url_for('main_bp.home')}}"
-                        ><button>Merch</button></a
-                    >
+                    <a href="{{ url_for('admin_bp.home') }}">
+                        <button>
+                            <i class="ri-list-check-2"></i>
+                            <span>Registration</span>
+                        </button>
+                    </a>
                 </div>
-            </div>
-            <div class="nav__registerAccount--mobile">
                 <div class="nav__item">
-                    <a id="loginButton" href="{{url_for('admin_bp.login')}}"
-                        ><button>Login</button></a
-                    >
+                    <a href="{{ url_for('matches_bp.admin_home') }}">
+                        <button>
+                            <i class="ri-article-line"></i>
+                            <span>Matches</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
+
         {% block content %}{% endblock %} {% block footer %} {% endblock %} {%
         block scripts %} {% endblock %}
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>

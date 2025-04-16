@@ -29,12 +29,12 @@
     --tiny-scale: 0.694rem;
 }
 
-body {
+/* body {
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 h1 {
     font-size: var(--h1-scale);

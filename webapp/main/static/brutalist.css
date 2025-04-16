@@ -64,7 +64,7 @@ body {
 .container {
     /* background-color: var(--henko-shiro); */
     margin: 0 15vw;
-    height: 100vh;
+    height: 100%;
 }
 
 p {
@@ -446,4 +446,10 @@ h6 {
 
 .hidden{
     display: none;
+}
+
+.hollow {
+    color: var(--henko-ao);
+    /* text-align: center; */
+    -webkit-text-stroke: 2px var(--henko-kurai-ao);
 }

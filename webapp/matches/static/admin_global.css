@@ -37,7 +37,7 @@
     text-align: start;
 }
 .dashboard__title h1 {
-    color: var(--henko-kurai-ao);
+    /* color: var(--henko-kurai-ao); */
     font-size: var(--h1-scale);
 }
 .dashboard__subtitle h3 {
@@ -307,9 +307,9 @@
         margin: 0 8vw;
         padding: 1.5rem;
     }
-    .dashboard__title h1 {
+    /* .dashboard__title h1 {
         font-size: 1.8rem;
-    }
+    } */
 }
 
 @media screen and (max-width: 768px) {
@@ -317,9 +317,9 @@
         margin: 0 5vw;
         padding: 1rem;
     }
-    .dashboard__title h1 {
+    /* .dashboard__title h1 {
         font-size: 1.6rem;
-    }
+    } */
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -333,9 +333,9 @@
         margin: 0 2vw;
         padding: 1rem;
     }
-    .dashboard__title h1 {
+    /* .dashboard__title h1 {
         font-size: 1.4rem;
-    }
+    } */
     .btn-submit,
     .btn-back {
         font-size: 0.9rem;
@@ -424,9 +424,9 @@
         margin: 0 5vw;
         padding: 1.5rem;
     }
-    .dashboard__title h1 {
+    /* .dashboard__title h1 {
         font-size: 1.8rem;
-    }
+    } */
 }
 
 @media screen and (max-width: 768px) {
@@ -434,9 +434,9 @@
         margin: 0 5vw;
         padding: 1rem;
     }
-    .dashboard__title h1 {
+    /* .dashboard__title h1 {
         font-size: 1.6rem;
-    }
+    } */
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -450,9 +450,9 @@
         margin: 0 2vw;
         padding: 1rem;
     }
-    .dashboard__title h1 {
+    /* .dashboard__title h1 {
         font-size: 1.4rem;
-    }
+    } */
     .btn-submit,
     .btn-back {
         font-size: 0.9rem;

@@ -30,3 +30,7 @@ def merchandise():
 @main_bp.route('/test')
 def boilerplate():
     return render_template('main/tests.html')
+
+@main_bp.route('/competition')
+def competition():
+    return render_template('main/competition.html')

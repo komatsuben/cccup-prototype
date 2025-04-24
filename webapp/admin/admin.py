@@ -48,19 +48,16 @@ admin_bp = Blueprint(
     static_url_path='/static/admin_bp',
 )
 
-# Basic admin login & logout handler
-# TODO: migrate login & logout from mongodb to psql
+# Basic admin login & logout handlers
+# @natalius implement Google Login here
 @admin_bp.route("/login", methods=["GET", "POST"])
 def login():
-    # Get the client's IP address
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
 
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         
-
-        # Query the admin user from PostgreSQL
         user = Admin.query.filter_by(username=username).first()
 
         if not user or not check_password_hash(user.password_hash, password):

@@ -70,7 +70,7 @@ def login():
         log_admin_action(user.id, "Successful login")
         flash("Login successful", "success")
         
-        return redirect(url_for('admin_bp.home'))
+        return redirect(url_for('admin_bp.home'), user=user)
 
     return render_template("admin/login.html")
 
@@ -91,7 +91,8 @@ def home():
     user = session.get('user', {})
     if not user: return redirect(url_for('admin_bp.login'))
     
-    return render_template("admin/dashboard.html")
+    username = user.get('username', 'Admin')
+    return render_template("admin/dashboard.html", username=username)
 
 @admin_bp.route('/panel/profile')
 def whoami():
@@ -102,7 +103,7 @@ def whoami():
     return render_template("admin/profile.html", username=username, role=display_role)
 
 @admin_bp.route('/panel/registration', methods=['GET'])
-def admin_panel_regis():
+def admin_regis():
     user = session.get('user', {})
     if not user: return redirect(url_for('admin_bp.login'))
     
@@ -251,7 +252,7 @@ def super_home():
     else:
         return redirect(url_for('admin_bp.home'))
 
-@admin_bp.route('/panel/admin/admins', methods=["GET"])
+@admin_bp.route('/panel/admins', methods=["GET"])
 def get_admins():
     user = session.get('user', {})
     role = user.get('role')

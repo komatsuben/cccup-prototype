@@ -7,12 +7,6 @@ block head%}
 {%endblock%} {% block content %}
 <div class="container center">
     <div class="login">
-        <div class="login__head">
-            <h1>Signup ..</h1>
-            <!-- <h4>Buat <del>babu</del> admin baru!</h4> -->
-            <h4>Buat admin baru!</h4>
-        </div>
-
         {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %}
         <ul class="flashes">
@@ -21,6 +15,11 @@ block head%}
             {% endfor %}
         </ul>
         {% endif %} {% endwith %}
+        <div class="login__head">
+            <h1>Signup ..</h1>
+            <h4>Buat <strike>kacung</strike> admin baru!</h4>
+        </div>
+
 
         <div class="login__form">
             <form action="/admin/signup" method="post">
@@ -43,7 +42,6 @@ block head%}
                         name="username"
                         id="username"
                         class="login__user"
-                        pattern="[A-Za-z0-9_]+"
                         required
                     />
                 </div>

@@ -1,0 +1,362 @@
+{% extends "main/base.html" %}
+
+{% block title %}Pendaftaran{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('registration_bp.static', filename='form.css') }}">
+<style>
+    .form {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+    
+    .form-section {
+        background: var(--light);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .form-section h3 {
+        color: var(--primary);
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--secondary);
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--dark);
+    }
+    
+    .form-input, .form-select, .form-file {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--secondary);
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+    
+    .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(116, 155, 194, 0.2);
+    }
+    
+    .form-file {
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        cursor: pointer;
+    }
+    
+    .form-file::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    
+    .form-file::before {
+        content: 'Pilih File';
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        margin-right: 1rem;
+        cursor: pointer;
+    }
+    
+    .file-info {
+        font-size: 0.875rem;
+        color: var(--tertiary);
+        margin-top: 0.25rem;
+    }
+    
+    .form-submit {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .form-submit .btn {
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .form-error-list {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0 0 0;
+    }
+    
+    .form-error-item {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form">
+    <form method="POST" enctype="multipart/form-data" class="form__container">
+        {{ form.hidden_tag() }}
+        <h1 class="text-center mb-4">Formulir Pendaftaran</h1>
+        
+        <!-- Informasi Pribadi -->
+        <div class="form-section">
+            <h3>Informasi Pribadi</h3>
+            
+            <div class="form-group">
+                {{ form.full_name.label(class="form-label") }}
+                {{ form.full_name(class="form-input") }}
+                {% if form.full_name.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.full_name.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.school.label(class="form-label") }}
+                {{ form.school(class="form-input") }}
+                {% if form.school.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.school.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.team_size.label(class="form-label") }}
+                {{ form.team_size(class="form-input", type="number", min="1") }}
+                {% if form.team_size.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.team_size.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-input") }}
+                {% if form.email.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.email.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-input") }}
+                {% if form.password.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.password.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-input") }}
+                {% if form.confirm_password.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.confirm_password.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Upload Dokumen -->
+        <div class="form-section">
+            <h3>Upload Dokumen</h3>
+            
+            <div class="form-group">
+                {{ form.statement.label(class="form-label") }}
+                {{ form.statement(class="form-file") }}
+                <div class="file-info">Format: PDF (Maks. 5MB)</div>
+                {% if form.statement.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.statement.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.school_permission.label(class="form-label") }}
+                {{ form.school_permission(class="form-file") }}
+                <div class="file-info">Format: PDF (Maks. 5MB)</div>
+                {% if form.school_permission.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.school_permission.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.nisn.label(class="form-label") }}
+                {{ form.nisn(class="form-file") }}
+                <div class="file-info">Format: PNG, JPG, JPEG, atau PDF (Maks. 5MB)</div>
+                {% if form.nisn.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.nisn.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.student_card.label(class="form-label") }}
+                {{ form.student_card(class="form-file") }}
+                <div class="file-info">Format: PNG, JPG, atau JPEG (Maks. 5MB)</div>
+                {% if form.student_card.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.student_card.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.selfie.label(class="form-label") }}
+                {{ form.selfie(class="form-file") }}
+                <div class="file-info">Format: PNG, JPG, atau JPEG (Maks. 5MB)</div>
+                {% if form.selfie.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.selfie.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.photo.label(class="form-label") }}
+                {{ form.photo(class="form-file") }}
+                <div class="file-info">Format: PNG, JPG, atau JPEG (Maks. 5MB)</div>
+                {% if form.photo.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.photo.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.birth_certificate.label(class="form-label") }}
+                {{ form.birth_certificate(class="form-file") }}
+                <div class="file-info">Format: PNG, JPG, JPEG, atau PDF (Maks. 5MB)</div>
+                {% if form.birth_certificate.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.birth_certificate.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.report_card.label(class="form-label") }}
+                {{ form.report_card(class="form-file") }}
+                <div class="file-info">Format: PNG, JPG, JPEG, atau PDF (Maks. 5MB)</div>
+                {% if form.report_card.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.report_card.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.non_athlete_statement.label(class="form-label") }}
+                {{ form.non_athlete_statement(class="form-file") }}
+                <div class="file-info">Format: PDF (Maks. 5MB)</div>
+                {% if form.non_athlete_statement.errors %}
+                    <ul class="form-error-list">
+                        {% for error in form.non_athlete_statement.errors %}
+                            <li class="form-error-item">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="form-submit">
+            <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Update file input display
+const fileInputs = document.querySelectorAll('.form-file');
+fileInputs.forEach(input => {
+    // Set initial display
+    updateFileDisplay(input);
+    
+    // Add change event listener
+    input.addEventListener('change', function() {
+        updateFileDisplay(this);
+    });
+});
+
+function updateFileDisplay(input) {
+    const fileName = input.files[0] ? input.files[0].name : 'Belum ada file dipilih';
+    const fileInfo = input.nextElementSibling;
+    if (fileInfo && fileInfo.classList.contains('file-info')) {
+        fileInfo.textContent = fileName;
+    }
+}
+
+// Form validation
+const form = document.querySelector('form');
+if (form) {
+    form.addEventListener('submit', function(e) {
+        let isValid = true;
+        const requiredInputs = form.querySelectorAll('[required]');
+        
+        requiredInputs.forEach(input => {
+            if (!input.value) {
+                isValid = false;
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Harap isi semua field yang wajib diisi!');
+        }
+    });
+}
+</script>
+{% endblock %}

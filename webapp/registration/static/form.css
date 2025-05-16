@@ -1,0 +1,128 @@
+/* Form Component */
+.form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--light);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form__container {
+    width: 100%;
+}
+
+.form__title {
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: var(--h3-scale);
+    font-weight: 500;
+    color: var(--henko-kurai-ao);
+}
+
+/* Form Group */
+.form__group {
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.form__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--tertiary);
+    font-size: var(--small-scale);
+    font-weight: 500;
+}
+
+/* Input Container */
+.form__input-container,
+.form__select-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Input Fields */
+.form__input,
+.form__select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    font-size: var(--p-scale);
+    color: var(--dark);
+    background-color: var(--light);
+    transition: all var(--transition-speed) ease;
+}
+
+/* Focus States */
+.form__input:focus,
+.form__select:focus {
+    outline: none;
+    border-color: var(--henko-ao);
+    box-shadow: 0 0 0 2px rgba(116, 155, 194, 0.2);
+}
+
+/* Select Dropdown */
+.form__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: var(--p-scale);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.button--primary {
+    background-color: var(--henko-ao);
+    color: var(--light);
+    width: 100%;
+}
+
+.button--primary:hover {
+    background-color: var(--henko-kurai-ao);
+}
+
+/* Error Messages */
+.form__error-list {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style-type: none;
+}
+
+.form__error-item {
+    color: #e74c3c;
+    font-size: var(--small-scale);
+    margin-top: 0.25rem;
+}
+
+/* Form Submit */
+.form__submit {
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .form {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .form__title {
+        font-size: var(--h4-scale);
+    }
+}

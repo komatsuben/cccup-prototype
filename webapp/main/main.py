@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, abort, redirect, url_for
+from flask import Blueprint, render_template, abort, redirect, url_for, flash, request
 from jinja2 import TemplateNotFound
+from .forms import LoginForm
 
 main_bp = Blueprint(
     'main_bp', __name__,
@@ -34,3 +35,15 @@ def boilerplate():
 @main_bp.route('/competition')
 def competition():
     return render_template('main/competition.html')
+
+@main_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Add your authentication logic here
+        username = form.username.data
+        password = form.password.data
+        # TODO: Add actual user authentication
+        flash('Login successful!', 'success')
+        return redirect(url_for('main_bp.home'))
+    return render_template('main/login.html', form=form)

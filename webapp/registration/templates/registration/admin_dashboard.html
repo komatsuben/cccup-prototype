@@ -1,0 +1,94 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mt-4 bigbox">
+    <h1 class="mb-4">Admin Panel Regis</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Filter and Sort Form -->
+    <form method="get" action="{{ url_for('admin_bp.admin_panel_regis') }}" class="form-inline mb-4">
+        <div class="form-group mr-3">
+            <label for="lomba" class="mr-2">Lomba:</label>
+            <select class="form-control" id="lomba" name="lomba">
+                <option {% if request.args.get('lomba', '') == '' %}selected{% endif %} value="">Select Lomba</option>
+                {% for comp in comp_choices %}
+                    <option 
+                        value="{{ comp }}" 
+                        {% if request.args.get('lomba', '') == comp %}selected{% endif %}
+                    >
+                        {{ comp.replace('-', ' ').title() }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>        
+        <div class="form-group mr-3">
+            <label for="jenjang" class="mr-2">Jenjang:</label>
+            <select class="form-control" id="jenjang" name="jenjang">
+                <option {% if request.args.get('jenjang', '') == '' %}selected{% endif %} value="">Select Jenjang</option>
+                <option value="SMP" {% if request.args.get('jenjang') == 'SMP' %}selected{% endif %}>SMP</option>
+                <option value="SMA" {% if request.args.get('jenjang') == 'SMA' %}selected{% endif %}>SMA</option>
+            </select>
+        </div>
+        <div class="form-group mr-3">
+            <label for="status" class="mr-2">Status:</label>
+            <select class="form-control" id="status" name="status">
+                <option {% if request.args.get('status', '') == '' %}selected{% endif %} value="">Select Status</option>
+                <option value="Pending" {% if request.args.get('status') == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Submitted" {% if request.args.get('status') == 'Submitted' %}selected{% endif %}>Submitted</option>
+                <option value="Confirmed" {% if request.args.get('status') == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                <option value="Waitlisted" {% if request.args.get('status') == 'Waitlisted' %}selected{% endif %}>Waitlisted</option>
+                <option value="Rejected" {% if request.args.get('status') == 'Rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+        </div>
+        <div class="form-group mr-3">
+            <label for="sort" class="mr-2">Sort by:</label>
+            <select class="form-control" id="sort" name="sort">
+                <option value="timestamp" {% if request.args.get('sort') == 'timestamp' %}selected{% endif %}>Timestamp</option>
+                <option value="user_id" {% if request.args.get('sort') == 'user_id' %}selected{% endif %}>ID</option>
+                <option value="name" {% if request.args.get('sort') == 'name' %}selected{% endif %}>Name</option>
+                <option value="status" {% if request.args.get('sort') == 'status' %}selected{% endif %}>Status</option>
+            </select>
+        </div>
+        <button type="submit" class="btn">Filter & Sort</button>
+    </form>
+
+    <!-- User Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Time Submitted</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>School</th>
+                    <th>Lomba</th>
+                    <th>Jenjang</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.time_submitted | format_datetime}}</td>
+                    <td><a href="/admin/{{user.regis_info.competition_id}}/{{ user.regis_info.jenjang }}/{{ user.user_id }}">{{ user.user_id }}</a></td>
+                    <td><a href="/admin/{{user.regis_info.competition_id}}/{{ user.regis_info.jenjang }}/{{ user.user_id }}">{{ user.name }}</a></td>
+                    <td><a href="/admin/{{user.regis_info.competition_id}}/{{ user.regis_info.jenjang }}/{{ user.user_id }}">{{ user.regis_info.school }}</a></td>
+                    <td>{{ user.regis_info.competition_id }}</td>
+                    <td>{{ user.regis_info.jenjang }}</td>
+                    <td>{{ user.regis_info.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

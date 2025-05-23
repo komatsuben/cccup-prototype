@@ -70,7 +70,7 @@ def login():
         log_admin_action(user.id, "Successful login")
         flash("Login successful", "success")
         
-        return redirect(url_for('admin_bp.home'), user=user)
+        return redirect(url_for('admin_bp.home'))
 
     return render_template("admin/login.html")
 

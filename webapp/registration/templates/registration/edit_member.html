@@ -1,0 +1,102 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+Edit Peserta
+{% endblock %}
+
+{% block content %}
+<style>
+    input[type=file] {
+        width: 95px;
+        padding: 0 !important;
+    }
+</style>
+<div class="bigbox">
+    <h1>Edit Anggota Tim</h1>
+    <form method="POST" action="{{ url_for('regis_bp.edit_member', member=user_data['name']) }}" enctype="multipart/form-data" id="add_form">
+        {% for input,type in inputs.items() %}
+        <br>
+            <div class="form-floating">
+                {% if type == "String" %}
+                <input name="{{input}}" type="text" id="{{input}}Field" class="form-control field" value="{{ user_data[input] }}">
+                <span style="color:red" id="{{input}}Error"></span>
+                <label for="{{input}}Field">{{ input_naming[input] }}</label>
+                {% elif type == "Date" %}
+                <input name="{{input}}" type="date" id="{{input}}Field" class="form-control field"  max="2024-12-31" min="2000-12-31" value="{{ user_data[input] }}">
+                <span style="color:red" id="{{input}}Error"></span>
+                <label for="{{input}}Field">{{ input_naming[input] }}</label>
+                {% elif type == "File" %}
+                <div class="form-control" id="{{input}}DIV" style="display: flex;">
+                    <input name="{{input}}" type="file" id="{{input}}Field" class="field form-control" accept="image/png,image/jpg,image/jpeg,image/gif,.txt,application/pdf" onchange="changeFile('{{ input }}')">
+                    <a id="{{ input }}for" target="_blank" href="{{ user_data[input]['url'] }}">| {{ user_data[input]["nickname"] }}</a>
+                    <span style="color:red" id="{{input}}Error"></span>
+                </div>
+                <label for="{{input}}DIV">{{ input_naming[input] }}</label>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% if sub != [] %}
+            <br>
+                <select id="subkategori" name="subkategori" class="form-select field">
+                    <option value="{{subkategori}}">{{subkategori}}</option>
+                    {% for s in sub %}
+                        <option value="{{s}}">{{s}}</option>
+                    {% endfor %}
+                </select>
+                <span style="color:red" id="subkategoriError"></span>
+            {% endif %}
+        <br>
+        <button type="button" class="btn btn-primary w-100" onclick="submitForm()">Simpan</button>
+    </form>
+</div>
+<script>
+    function Req(input) {
+        if (input != "" && input != NaN) {
+            return true;
+        }
+        return false
+    }
+
+    function Email(input) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(input);
+    }
+    function submitForm() {
+        var fields = document.getElementsByClassName("field");
+        var all = true;
+        for(let i = 0; i < fields.length; i++) {
+            var field = fields[i];
+            if(field.name == "Email" && !Email(field.value)) {
+                    document.getElementById(field.name + "Error").innerHTML = "Tolong masukkan Email yang valid";
+                    field.scrollIntoView();
+                    all = false;
+            }else if((field.type == "text" || field.type == "date") && !Req(field.value)) {
+                    document.getElementById(field.name + "Error").innerHTML = "Input ini harus diisi";
+                    field.scrollIntoView();
+                    all = false;  
+            } else if(field.tagName.toLowerCase() == "select") {
+                if(field.value == "" || field.value == NaN) {
+                    document.getElementById("subkategoriError").innerHTML = "Tolong isi subkategori";
+                    all = false;
+                    field.scrollIntoView();
+                } else {
+                    document.getElementById("subkategoriError").innerHTML = "";
+                }
+            }  else {
+                document.getElementById(field.name + "Error").innerHTML = "";
+            } 
+    }
+    if(all) {
+            document.getElementById("add_form").submit();
+    }
+}
+    function changeFile(x) {
+        var input = document.getElementById(x + 'Field');
+        var file = input.files[0];
+        if (file) {
+            document.getElementById(x + "for").innerHTML = "| " + file.name;
+            document.getElementById(x + "for").removeAttribute("href");
+        }
+    }
+</script>
+{% endblock %}

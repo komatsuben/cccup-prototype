@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% block content %}
+    <div class="container">
+        <div style="display: flex; flex-direction: column; gap: 2rem; padding: 1.5rem 0;">
+            <div style="text-align: center;">
+                <h1 style="font-size: var(--h2-scale); margin-bottom: 1rem;">Welcome to the Admin Panel, {{username}}</h1>
+            </div>
+            
+            <div style="background: white; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <h2 style="font-size: var(--h4-scale); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--henko-ao);">Panels</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <a href="{{url_for('registration_bp.register')}}" class="brutalist__button" style="width: 100%; text-align: center; padding: 0.5rem 1rem;">
+                        Registration Panel
+                    </a>
+                    <a href="{{url_for('admin_bp.competition_status')}}" class="brutalist__button" style="width: 100%; text-align: center; padding: 0.5rem 1rem;">
+                        Lihat Kuota Tersisa
+                    </a>
+                    <a href="{{url_for('matches_bp.add_match')}}" class="brutalist__button" style="width: 100%; text-align: center; padding: 0.5rem 1rem;">
+                        Add Match
+                    </a>
+                    <a href="{{url_for('matches_bp.add_match')}}" class="brutalist__button" style="width: 100%; text-align: center; padding: 0.5rem 1rem;">
+                        Add 3 Set Match
+                    </a>
+                    <a href="{{url_for('matches_bp.admin_home')}}" class="brutalist__button" style="width: 100%; text-align: center; padding: 0.5rem 1rem;">
+                        Matches Panel
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded shadow">
+                <h2 class="mb-4 pb-2 border-b-2 border-henko-ao">Menu</h2>
+                <p>List of available menu</p>
+            </div>
+            <div class="bg-white p-6 rounded shadow">
+                <h2 class="mb-4 pb-2 border-b-2 border-henko-ao">Logs</h2>
+                <p>View system logs</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

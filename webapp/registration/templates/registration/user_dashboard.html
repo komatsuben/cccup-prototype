@@ -1,0 +1,218 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+<style>
+    .inline {
+        display: flex;
+        white-space: nowrap;
+    }
+</style>
+{% block content %}
+<div class="bigbox">
+    <h1 class="heading">Hi {{ user_data.name }}!</h1>
+    <div class="message">
+        <p>Semua Informasi Pendafataran Dapat Dilihat di Halaman <b>Persyaratan</b></p> <br>
+        <p><a href="{{url_for('main_bp.persyaratan')}}" target="_blank">Buka Halaman Syarat Pendaftaran</a> <br>
+            Silahkan menghubungi Aji (<a href="https://api.whatsapp.com/send/?phone=6282128513897&text&type=phone_number&app_absent=0" target="_blank">62 821-2851-3897</a>) 
+            bila memiliki pertanyaan berkaitan dengan pendaftaran CC CUP</p> <br>
+
+        <p>Tutorial Pendaftaran: <a href="https://youtu.be/pqSOnNIR8wo" target="_blank" rel="noopener noreferrer">Youtube</a></p>
+    </div>
+    <p class="desc">Registration Status: <b>{{ user_data.regis_info.status }}</b></p> 
+    {% if user_data.regis_info.status == "Pending" %}
+    <br>
+    <form action="{{ url_for('regis_bp.submit_regis') }}" id="fullSubmitForm" method="POST">
+        <button type="button" onclick="openCheck()" class="btn w-100">TEKAN TOMBOL INI APABILA SEMUA BERKAS PENDAFTARAN DAN DATA PESERTA SUDAH LENGKAP DAN BENAR!</button>
+    </form>
+    <br>
+    {% elif user_data.regis_info.status == "Submitted" %}
+    <br>
+    <form action="{{ url_for('regis_bp.unsubmit') }}" method="POST">
+        <button type="submit" class="btn w-100">BATALKAN PENDAFTARAN</button>
+    </form>
+    <br>
+    {% endif %}
+    <section id="fixed-info">
+        <h3>Informasi Pendaftaran</h3>
+        <div class="field">
+            <label class="field-label">Cabang Perlombaan</label>
+            <p class="field-data-fixed">{{ user_data.regis_info.competition_id.replace("-", " ") | capitalize }}</p>
+        </div>
+        <div class="field">
+            <label class="field-label">Jenjang</label>
+            <p class="field-data-fixed">{{ user_data.regis_info.jenjang.upper() }}</p>
+        </div>
+        <div class="field">
+            <label class="field-label">Sekolah</label>
+            <p class="field-data-fixed">{{ user_data.regis_info.school }}</p>
+        </div>
+        <div class="field">
+            <label class="field-label">Nama Tim</label>
+            <p class="field-data-fixed">{{ user_data.regis_info.teamname }}</p>
+        </div>
+        <div class="field">
+            <label class="field-label">Email</label>
+            <p class="field-data-fixed">{{ user_data.email }}</p>
+        </div>
+        <div class="field">
+            <label class="field-label">Nomor Telepon</label>
+            <p class="field-data-fixed">{{ user_data.phone }}</p>
+        </div>
+    </section>
+    <section id="members">
+        <h3>Mohon Isi Data Peserta!</h3>
+        <div class="container">
+            <p class="col center">Min: {{member_req[0]}} Max: {{member_req[1]}}</p>
+            {% if comp == "wall-climbing" %}
+            <p class="col center">Max 3 Putra dan 3 Putri Kecuali Sekolah Homogen</p>
+            {% endif %}
+            <p class="col center">Jumlah Saat Ini: {{member_c}}</p>
+        </div>
+        {% if user_data.members == [] %}
+            <p class="desc">Belum ada peserta, tambahkan peserta</p>
+        {% else %}
+            {% for member in user_data.members %}
+                <div class="member-info">
+                    <h4><b>{{ member["name"] }}</b></h4>
+                    {% for key, value in member.items() %}
+                        {% if value is mapping and 'url' in value %}
+                            <p>{{ key | capitalize }}: <a href="{{ value['url'] }}" target="_blank">File {{ key }}</a></p>
+                        {% else %}
+                            <p>{{ key | capitalize }}: {{ value }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    {% if user_data.regis_info.status == "Pending" %}
+                    <div class="buttons">
+                        <a class="btn" href="{{url_for('regis_bp.edit_member', member=member['name'])}}">Edit Peserta</a>
+                        <a class="btn" href="{{url_for('regis_bp.delete_member', member_name=member['name'])}}">Hapus Peserta</a>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if user_data.regis_info.status == "Pending" %}
+        {% if member_req[1] > member_c  %}
+            <a href="{{ url_for('regis_bp.add_member') }}" class="center"><button class="btn full-width">Tambah Peserta</button></a>
+        {% endif %}
+        {% endif %}
+        {% if error == "members" %}
+            <span style="color:red">Diperlukan minimal {{ member_req[0] }} peserta, anda hanya ada {{ member_c }} peserta</span>
+        {% endif%}
+    </section>
+    <section id="files">
+        <h3>Berkas Pendaftaran</h3>
+        <ul class="list-group">
+        {% for file_type, file_data in user_data.regis_files.items() %}
+            <li class="list-group-item inline">
+                {% if file_data and file_data.url %}    
+                    <div class="inline" style="margin-left:0; margin-right:auto">
+                        <strong>{{ regis_files[file_type] | capitalize  }}:</strong>
+                        <a href="{{ file_data.url }}" target="_blank" class="w-100">{{ file_data.nickname }}</a>
+                    </div>
+                {% else %}
+                    <div class="inline" style="margin-left:0; margin-right:auto">
+                        <strong>{{ regis_files[file_type] | capitalize }}:</strong>
+                        <span  class="w-100">No file uploaded. </span>
+                    </div>
+                {% endif %}
+                <div class="inline" style="margin-left:auto; margin-right:0">
+                    <form action="{{ url_for('regis_bp.upload_file', file_type=file_type) }}" method="post" enctype="multipart/form-data" id="{{file_type}}Form">
+                        {% if user_data.regis_info.status == "Pending" %}
+                        <button class="btn btn-primary h-100" type="button" for="{{ file_type }}" onclick="openFile('{{ file_type }}')">Unggah<input onchange="submitForm('{{file_type}}')" name="{{ file_type }}" id="{{ file_type }}" accept="image/png,image/jpg,image/jpeg,image/gif,.txt,application/pdf" type="file" hidden></button>
+                        {% endif %}
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+        <div class="message">
+            <p>Format surat pernyataan dan izin sekolah dapat dilihat di halaman
+                <a href="{{url_for('main_bp.persyaratan')}}" target="_blank">Persyaratan</a>
+            </p>
+        </div>
+        {% if error == "files" %}
+            <span style="color:red">Pastikan semua berkas sudah diunggah</span>
+        {% endif%}
+    </section>
+
+    <hr>
+    {% if user_data.other_info != {} %}
+    <section id="other_info">
+    <h3>Informasi</h3>
+    <form action="{{ url_for('regis_bp.add_info') }}" method="POST">
+        <ul class="list-group">
+            {% for input, value in user_data.other_info.items() %}
+            {% if team_inputs[input] is mapping %}
+            
+            <li class="list-group-item">
+                <strong>{{ other_info[input] }}</strong> 
+                {% if "multiple" in team_inputs[input] %}
+                {% for v in team_inputs[input]["multiple"] %}
+                  <div style="display:flex; margin-left: 5px;">
+                    <input type="checkbox" name="{{input}}[]" value="{{v}}" {% if user_data.regis_info.status != "Pending" %}
+                    disabled
+                    {% endif %}
+                    {% if ',' + v + ',' in value %}
+                    checked
+                    {% endif %}> 
+                    <p style="margin-left: 2px;">{{v}}</p>
+                  </div>
+                {% endfor %}
+            </li>
+                {% endif %}
+            {% else %}
+            <li class="list-group-item">
+                <strong>{{ other_info[input] }}</strong> 
+                <input value="{{ value }}" name="{{input}}" class="form-control"
+                {% if user_data.regis_info.status != "Pending" %}
+                disabled
+                {% endif %}>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% if user_data.regis_info.status == "Pending" %}
+            
+            <button type="submit" class="btn">Simpan</button>
+        {% endif %}
+    </form>
+    {% if error == "other_info" %}
+            <span style="color:red">Pastikan informasi sudah terisi dengan lengkap</span>
+    {% endif%}
+    </section>
+    {% endif %}
+    <br>
+    <br>
+</div>
+    <div id="submitCheck" style="display:none; background-color: #a5a49a; padding: min(4%, 30px); text-align: center; position:fixed;top: 50%;left: 50%;z-index: 9999;transform: translate(-50%, -50%); width: 70vw; max-width: 600px;" class="card">
+    <div style="height: 5vh"></div>
+        <p><b>PASTIKAN SEMUA DATA SUDAH DIINPUT DENGAN BENAR</b></p>
+    <br>
+    <div style="display:flex;">
+        <button class="btn" style="width: 45%;  font-size: clamp(4px, 30vw, 15px);" onclick="actuallySubmit()">Sudah</button>
+        <div style="width: 10%;"></div>
+        <button class="btn" style="width: 45%; font-size:clamp(4px, 30vw, 15px);" onclick="closeCheck()">Kembali</button>
+    </div>
+    <div style="height: 5vh"></div>
+    </div>
+<script>
+    function openFile(name) {
+        document.getElementById(name).click();
+    }
+    function submitForm(name) {
+        document.getElementById(name + "Form").submit()
+    }
+    function openCheck() {
+        document.getElementById("submitCheck").style.display = "block";
+    }
+    function actuallySubmit() {
+        document.getElementById("fullSubmitForm").submit();
+    }
+    function closeCheck() {
+        document.getElementById("submitCheck").style.display = "none";
+    }
+</script>
+{% endblock %}
+
